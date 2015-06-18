@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+<h2>Please choose a file</h2>
+
+<div class="row" id="row_main_content">
+    
+    {% if ERR_FOUND %}
+        <div class="col-xs-12">
+            <div class="alert alert-warning" role="alert">{{ ERR_MSG|safe }}</div>                
+        </div>
+    {% endif %}
+    
+    {% if not ERR_FOUND %}    
+    <div class="col-xs-12">
+        <p><b>{{ file_names|length }} file(s) found.</b></p>
+        <p>Please choose a file from the list below:</p>
+        
+        <ul>
+            {% for fname in file_names %}
+            <li><a href="/preview-file/{{ fname }}">{{ fname }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+</div>    
+{% endblock %}

@@ -16,36 +16,42 @@
 
 	</head>
 	<body>
-<h1 id=title-page>
-Data Preview Page: Data File ID = {{fileid}}
-</h1>
+
 
 
 <div class= "container-fluid">
 
 <div class= "row">
 
+ 	<div class="col-xs-12">
+         <p><a href="/list-files">Return to file list</a></p>
 
+            <h3 id=title-page>preview: {{ filename }}</h3>
+
+      
+       {% if ERR_FOUND %}
+             <div class="col-xs-12">
+                 <div class="alert alert-warning" role="alert">{{ ERR_MSG|safe }}</div>                
+             </div>
+         {% endif %}
+    </div>
+    <!-- start variable div -->
  	<div class="col-xs-12 col-md-4">
-
-<table border="1" class = "table table-striped">
-  <thead>
-    <tr style="text-align: right;">
-      <th>Variable Names</th>
-    </tr>
-  </thead>
-  <tbody>
-
-  		{{variables|safe}}
-
-  </tbody>
-</table>
-
-
- 
-		
- 	</div>
-  		<div class="col-xs-12 col-md-8">
+        <table class="table table-condensed">
+        {% for v in variables %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ v}}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td>Sorry, no variable names found</td>
+            </tr>
+        {% endfor %}
+        </table>
+   	
+ 	</div><!-- end: variable div -->
+    <div class="col-xs-12 col-md-8">
 
   			{{data|safe}}
   		</div>

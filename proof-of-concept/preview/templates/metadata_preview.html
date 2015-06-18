@@ -21,6 +21,12 @@
 
 		<div class= "row">
 
+            {% if ERR_FOUND %}
+                  <div class="col-xs-12">
+                      <div class="alert alert-warning" role="alert">{{ ERR_MSG|safe }}</div>                
+                  </div>
+              {% endif %}
+
  		<div class="col-xs-12 col-md-6">
 
 		<table border="1" class = "table table-striped">
