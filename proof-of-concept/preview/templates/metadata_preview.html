@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- Bootstrap core CSS -->
+  
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='stylesheet-metadata.css')}}" rel="stylesheet" type="text/css">
+  
+    	<link href="stylesheet-table.css" rel="stylesheet" type="text/css"/>
+<!-- Custom styles for this template -->
+
+	
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js">
+    </script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js" rel="stylesheet">
+
+</head>
+<body>
+
+    <div class= "container-fluid">
+
+		<div class= "row">
+
+ 		<div class="col-xs-12 col-md-6">
+
+		<table border="1" class = "table table-striped">
+  			<thead>
+    			<tr style="text-align: right;">
+      			<th>Variable Names</th>
+    			</tr>
+  			</thead>
+  			<tbody>
+
+  				{{variables|safe}}
+
+  			</tbody>
+		</table>
+		</div>
+
+
+  		<div class="col-xs-12 col-md-6">
+  		<table border = "1" class = "table table-striped">
+  		<thead>
+  			<tr style="text-align: right;">
+      			<th>Summary Metric</th>
+      			<th>Variable Value</th>
+    		</tr>
+  		</thead>
+
+  		<tbody>
+
+  			{{summary|safe}}
+
+
+  		</tbody>	
+  		</table>
+  		</div>
+ 	</div>
+ </div>
+
+ </body>
+</html>
