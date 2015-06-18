@@ -75,17 +75,7 @@ def read_file(filename):
    
     variables = df.columns
     length = len(df.columns)
-    long_string = str()
-    
-    for i in range(0,length):
-        long_string +="<tr> "
-        long_string += "<td> " 
-        long_string += variables[i] 
-        long_string += "</td> " 
-        long_string += "</tr>"
-    
-    
-    
+        
     df_preview = df[1:16]
     df_html = df_preview.to_html(index = False)
     
@@ -105,54 +95,38 @@ def read_file(filename):
     #return filename
 
 
-@app.route('/summary/<variable>/')
-def summary_stats(variable):
-    #pdb.set_trace()
-    json_data = pandas.io.json.read_json(open("/Users/timibennatan/Desktop/PracticeMetadata/metadata.json"))
+@app.route('/summary/<filename>/<variable>')
+def summary_stats(filename, variable):
     
-    df = pd.DataFrame(json_data)
-    variables = df.columns
-
-
-
-
-    json_variable = json_data[variable]
-    df_variable = pd.DataFrame(json_variable)
-
-    length_variables = len(variables)
-    length_df = df.shape[0]
+    d = { 'filename' : filename,
+        'chosen_variable' : variable }
     
-    #iterate through the varibles to create a table of variables
-    variables_table = str()
-    for i in range(0,length_variables):
-        variables_table +="<tr> "
-        variables_table += "<td> " 
-        variables_table += variables[i] 
-        variables_table += "</td> " 
-        variables_table += "</tr>"
-    
-    summary_table = str()
-    for i in range(1, length_df):
-        summary_table += "<tr>"
-        summary_table += "<td>"
-        summary_table += df_variable.index[i]
-        summary_table += "</td>"
-        summary_table += "<td>"
-        summary_table += str(df_variable.ix[i,0])
-        summary_table += "</td>"
-        summary_table += "</tr>"
+    # Does the file exist in the test directory?
+    #
+    filepath = join(TEST_FILES_DIR, filename)
+    if not isfile(filepath):
+        d.update({"ERR_FOUND": True,
+                "ERR_MSG": 'The file was not found: %s' % filename
+                })
+        return flask.render_template("variable_metadata.html", **d)
+            
 
-
-
-     
-    #df_variable.index[0] = "Summary Metric"
-    #df_variable.columns = "Variable Value"
+    df = pd.read_csv(filepath, sep='\t')
     
-    metadata_html = df_variable.to_html()
+    # does the variable exist
+    if not variable in df.columns:
+        d.update({"ERR_FOUND": True,
+                "ERR_MSG": 'The variable %s was not found in file: %s' % (variable, filename)
+                })
+        return flask.render_template("variable_metadata.html", **d)
     
-    d= {"variables": variables_table,"summary": summary_table}
+    s = df[variable]    # get a pandas series
     
-    return flask.render_template("metadata_preview.html", **d)
+    d.update({"variables" : df.columns,
+        "summary_dict" : s.describe().to_dict()
+        })
+    
+    return flask.render_template("variable_metadata.html", **d)
     
     
 

@@ -24,7 +24,7 @@
 <div class= "row">
 
  	<div class="col-xs-12">
-         <p><a href="/list-files">Return to file list</a></p>
+         <p><a href="/list-files">File list</a></p>
 
             <h3 id=title-page>preview: {{ filename }}</h3>
 
@@ -41,7 +41,7 @@
         {% for v in variables %}
             <tr>
                 <td>{{ loop.index }}</td>
-                <td>{{ v}}</td>
+                <td><a href="/summary/{{ filename }}/{{ v }}">{{ v}}</td>
             </tr>
         {% else %}
             <tr>

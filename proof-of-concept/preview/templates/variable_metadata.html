@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- Bootstrap core CSS -->
+  
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='stylesheet-metadata.css')}}" rel="stylesheet" type="text/css">
+  
+    	<link href="stylesheet-table.css" rel="stylesheet" type="text/css"/>
+<!-- Custom styles for this template -->
+
+	
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js">
+    </script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js" rel="stylesheet">
+
+</head>
+<body>
+
+    <div class= "container-fluid">
+
+		<div class= "row">
+		    <div class="col-xs-12">
+            <p><a href="/list-files">File list</a>
+                &nbsp; |&nbsp; <a href="/preview-file/{{ filename }}">File preview</a></p>
+            <h3>Metadata for variable <span style="color:#006699;">{{ chosen_variable }}</span> <br />
+                File: <span style="color:#006699;">{{ filename }}</span> </h3>
+            </div>
+            {% if ERR_FOUND %}
+                  <div class="col-xs-12">
+                      <div class="alert alert-warning" role="alert">{{ ERR_MSG|safe }}</div>                
+                  </div>
+              {% endif %}
+
+ 		<div class="col-xs-12 col-md-6">
+            <table class="table table-condensed">
+            {% for v in variables %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td><a href="/summary/{{ filename }}/{{ v }}">{{ v}}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td>Sorry, no variable names found</td>
+                </tr>
+            {% endfor %}
+            </table>
+		</div>
+
+
+  		<div class="col-xs-12 col-md-6">
+            <h4 class="text-center">{{ chosen_variable }}</h4>
+  		<table class="table table-striped table-bordered">
+  		<thead>
+  			<tr style="text-align: right;">
+      			<th>Summary Metric</th>
+      			<th>Variable Value</th>
+    		</tr>
+  		</thead>
+
+  		<tbody>
+            {% for k, v in summary_dict.items() %}
+            <tr>
+                <td>{{ k }}</td>
+                <td class="text-right">{{ v }}</td>
+            </tr>
+            {% endfor %}
+  			{{summary|safe}}
+
+
+  		</tbody>	
+  		</table>
+  		</div>
+ 	</div>
+ </div>
+
+ </body>
+</html>
