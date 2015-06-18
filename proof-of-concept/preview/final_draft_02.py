@@ -58,14 +58,16 @@ def list_files():
 @app.route('/preview-file/<filename>')
 def read_file(filename):
     
+    d = { 'filename' : filename }
+    
     # Does the file exist in the test directory?
     #
     filepath = join(TEST_FILES_DIR, filename)
     if not isfile(filepath):
-        d= {"ERR_FOUND": True,
+        d.update({"ERR_FOUND": True,
                 "ERR_MSG": 'The file was not found: %s' % filepath
-                }
-        return flask.render_template("list_files.html", **d)
+                })
+        return flask.render_template("index.html", **d)
             
 
     df = pd.read_csv(filepath, sep='\t')
@@ -87,7 +89,8 @@ def read_file(filename):
     stop = df_html.find(">")
     new_html2 = df_html[:start] + 'class = "table table-striped"' + df_html[stop:]
     
-    d = { "variables" : variables, 'data' : new_html2, "filename" : filename}
+    d.update( { "variables" : variables, 
+            'data' : new_html2 })
     
 
 

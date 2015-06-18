@@ -11,7 +11,6 @@
         </div>
     {% endif %}
     
-    {% if not ERR_FOUND %}    
     <div class="col-xs-12">
         <p><b>{{ file_names|length }} file(s) found.</b></p>
         <p>Please choose a file from the list below:</p>
@@ -22,6 +21,5 @@
             {% endfor %}
         </ul>
     </div>
-    {% endif %}
 </div>    
 {% endblock %}
