@@ -68,9 +68,8 @@ def read_file(filename):
                 "ERR_MSG": 'The file was not found: %s' % filepath
                 })
         return flask.render_template("index.html", **d)
-            
-
-    df = pd.read_csv(filepath, sep='\t')
+    
+    df = pd.read_csv(filepath, sep='\t', encoding='utf-8')
        
     #CREATING A LONG STRING TO ITERATE THROUGH THE VARIABLE NAMES AND 
     #CREATE THE BODY OF THE VARIABLE HTML TABLE'''
@@ -114,7 +113,7 @@ def summary_stats(filename, variable):
         return flask.render_template("variable_metadata.html", **d)
             
 
-    df = pd.read_csv(filepath, sep='\t')
+    df = pd.read_csv(filepath, sep='\t', encoding='utf-8')
     
     # does the variable exist
     if not variable in df.columns:
