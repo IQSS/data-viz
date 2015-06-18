@@ -19,7 +19,7 @@ app = flask.Flask(__name__)
 
 @app.route('/')
 def landpage():
-    print "hello world"
+    return "hello world"
     
 
 @app.route('/preview/<fileid>/')
