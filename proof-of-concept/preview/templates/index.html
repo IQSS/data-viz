@@ -1,5 +1,22 @@
 {% extends "base.html" %}
 
+{% block extra_header %}
+<script>
+
+function get_link(variable_name){
+    return "/summary/{{ filename }}/" + variable_name;
+}
+
+$(document).ready(function() {
+    $(".vlink").click(function(evt) {
+          evt.preventDefault(); // stop link from using href
+          var variable_name = $(this).attr('rel');
+          alert(get_link(variable_name));
+    });
+});
+</script>
+{% endblock %}
+
 {% block main_content %}
 <p><a href="/list-files">File list</a></p>
 <h2>preview: {{ filename }}</h2>
@@ -22,7 +39,7 @@
         {% for v in variables %}
             <tr>
                 <td>{{ loop.index }}</td>
-                <td><a href="/summary/{{ filename }}/{{ v }}">{{ v}}</td>
+                <td><a class="vlink" rel="{{ v }}">{{ v }}</td>
             </tr>
         {% else %}
             <tr>
