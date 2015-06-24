@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>test</title>
+
+    <!-- Custom styles for this template -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js" rel="stylesheet">
+    <style>
+        a.red{color:#ff0000;}
+    </style>
+    <script>
+    
+    VARIABLE_LIST_DELIMITER = '||';
+    
+    function update_variable_list(new_var_name){
+        console.log("(1) update_variable_list with: " + new_var_name);
+
+        // clear message div
+        $('#msg_div').html('');
+        
+        // Get variable list string from hidden input
+        //
+        var variable_list_string = $('#variable-list').val();
+        console.log("(2) hidden variable_list_string (may be empty): " + variable_list_string);
+        
+        // Split string into array or, create a new array
+        //
+        if (variable_list_string == ''){
+            console.log('(3a) make new array');
+            variable_array = [];  // new array
+        }else{            
+            console.log('(3b) convert string to array');
+            variable_array = variable_list_string.split(VARIABLE_LIST_DELIMITER);            
+        }
+
+        // Do we have this variable already?
+        //
+        link_obj = $('a[rel="' + new_var_name  + '"]');
+        
+        if ($.inArray(new_var_name, variable_array ) > -1){     // YES, we have it
+            console.log('(3) Already in array. Remove it: ' + new_var_name);
+            // remove item
+            variable_array.splice($.inArray(new_var_name, variable_array),1);
+            link_obj.removeClass();
+
+        }else{  // NO - add it to array
+            console.log('(4) Add variable' + new_var_name);
+            variable_array.push(new_var_name);             
+            link_obj.removeClass();
+            link_obj.addClass('red');
+        }
+
+
+        // Save it to hidden input
+        variable_list_string = variable_array.join(VARIABLE_LIST_DELIMITER);
+        $('#variable-list').val(variable_list_string);
+
+        //alert(variable_array.length);
+        $('#msg_div').html('Variable count: ' + variable_array.length + '<br /><pre>' + $('#variable-list').val() + '</pre>');
+        
+        //alert(var_name);
+    }
+    
+    $(document).ready(function() {
+        $(".vlink").click(function(evt) {
+              evt.preventDefault(); // stop link from using href
+              var variable_name = $(this).attr('rel');
+              //alert(variable_name);
+              update_variable_list(variable_name);
+        });
+    });
+    </script>
+    
+  </head>
+
+<body role="document">
+    <div class="container" style="margin-top:20px;">
+        <div class="row">
+            <div class="col-md-12">
+        	    <div>"hidden input"
+        	        <p><input type="hidden" id="variable-list" value="" /></p>
+        	    </div>
+	            <div id="msg_div">Variable count: 0<pre>(empty)</pre></div>
+	            <p>
+            	    <a rel="var1" href="#" class="vlink">var1</a><br />
+            	    <a rel="var2" href="#" class="vlink">var2</a><br />
+            	    <a rel="var3" href="#" class="vlink">var3</a><br />
+            	    <a rel="var4" href="#" class="vlink">var4</a><br />
+                </p>
+	        </div>
+	    </div>
+	</div>
+  </body>
+</html>
