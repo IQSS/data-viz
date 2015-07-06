@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='nv.d3.css')}}" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js" rel="stylesheet">
+
+    <!-- Load d3.v3.js and nv.d3.js -->
+    <script src="{{ url_for('static', filename='d3/d3.v3.js')}}"></script>
+    <script src="{{ url_for('static', filename='d3/nv.d3.js')}}"></script>
+   	<style>
+    /*.chart{
+      border-style: solid;
+      border-color: black;
+    }*/
+   	
+    a.red{
+      color:#ff0000;
+    }
+
+    #chart svg {
+  height: 600px;
+  width: 475px;
+}    
+
+    #reset{
+      visibility: hidden;
+
+    }
+    .axis {
+    font: 15px sans-serif;
+    
+    }
+
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: black;
+  shape-rendering: crispEdges;
+}
+
+
+
+/*.x.axis{
+  display:none;
+}*/
+  </style>
+  
+
+
+ <script type="text/javascript">
+
+ </script>
+
+<script type= "text/javascript">
+
+
+var first_time = true;
+
+
+
+$(document).ready(function(){
+
+// set up what's needed to accumulate varaible names in the hidden input
+  VARIABLE_LIST_DELIMITER = '||';
+
+//This is to create the hidden list which lets python know which variables are selected.:
+//___________________________________________________________________________________________
+$(function(){
+
+//BY DEFAULT, I WANT ALL THE BUTTONS TO BE HIDDEN. 
+$('#multi_bar').hide();
+
+    $('.variable').on('click',function(evt){
+      evt.preventDefault();
+
+      var new_variable = $(this).attr('id');
+
+      function update_variable_list(new_var_name){
+        var variable_list_string = $('#variable-list').val();
+
+      if (variable_list_string == ''){
+            variable_array = [];  // new array
+        }else{            
+            variable_array = variable_list_string.split(VARIABLE_LIST_DELIMITER);            
+        }
+
+       // Do we have this new varialble in the hidden input already? 
+        link_obj = $('a[id="' + new_var_name  + '"]');
+        
+        if ($.inArray(new_var_name, variable_array ) > -1){ // YES, we have it
+            // remove item
+            variable_array.splice($.inArray(new_var_name, variable_array),1);
+            link_obj.removeClass();
+
+        }else{  // NO - add it to array
+            variable_array.push(new_var_name);             
+            link_obj.removeClass();
+            link_obj.addClass('red');
+        }
+
+
+      
+
+      // Save it to hidden input
+        variable_list_string = variable_array.join(VARIABLE_LIST_DELIMITER);
+        $('#variable-list').val(variable_list_string);
+
+        
+
+      }
+      
+      update_variable_list(new_variable);
+
+
+      var variable_list_string = $('#variable-list').val();
+      
+      // alert(variable_list_string);
+      
+      
+      
+
+
+
+
+
+			$.getJSON('http://127.0.0.1:5000/summary_stats/',{new_variable: $(this).attr('id'), variable_list_string: variable_list_string},function(data){
+				$('.right_div').html(data.metadata_html);
+        $('#reset').css('visibility', 'visible');
+
+      
+
+//Below are the charts for 'bar only'
+//___________________________________________________________________________________________
+        if (data.all_plot_types == 'bars_only'){
+        
+        
+        
+
+    if(first_time == true){
+//here give the possible graphs to choose from:
+
+      $("#multi_bar").show();
+
+
+
+
+//If the user selects the 'multi-bar' option on his/her first pick:
+//-  -  -  -  --  -  -  -  --  -  -  -  --  -  -  -  --  -  -  -  --  -  -  -  --  -  -  -  -
+        $('#multi_bar').on('click', function(){
+          $('#multi_bar').hide();
+        var chart = nv.models.multiBarChart().stacked(false).showControls(false);
+
+        chart.yAxis
+        .tickFormat(d3.format(',.1f'));
+        chart.reduceXTicks(false);
+        chart.showLegend(true);
+        d3.select('#chart svg').datum(
+        JSON.parse(data.data_json_multibar)
+
+        ).transition().duration(500).call(chart);
+        nv.utils.windowResize(chart.update);
+
+        first_time = false;
+        window.selected_graph = "#multi_bar";
+        
+        // must set this variable tho indicate what to do 
+        //when "first_time" == false.
+
+});
+ 
+    }//end of the "first_time == true" statement"
+//-  -  -  -  --  -  -  -  --  -  -  -  --  -  -  -  --  -  -  -  --  -  -  -  --  -  -  -  -
+
+//now, this else is tricky. It knows this isn't the user's firt time around, but it needs to 
+//access the "selected_graph" variable to remember what variable the user picked the first
+// time around. 
+    else{
+      if(selected_graph === "#multi_bar"){
+      $(function(){
+          $(selected_graph).hide();
+        var chart = nv.models.multiBarChart().stacked(false).showControls(false);
+
+        chart.yAxis
+        .tickFormat(d3.format(',.1f'));
+        chart.reduceXTicks(false);
+        chart.showLegend(true);
+        d3.select('#chart svg').datum(
+        JSON.parse(data.data_json_multibar)
+
+        ).transition().duration(500).call(chart);
+        nv.utils.windowResize(chart.update);
+
+
+    });
+    };
+        
+
+				}
+			return false;
+
+    };
+    });
+});
+});
+</script>
+
+<script type= 'text/javascript'>
+
+$(function(){
+  
+$("#reset").on('click', function() {location.reload();
+      });
+});
+
+
+</script>
+
+  </head>
+
+<body role="document">
+
+
+<!-- creating a hidden input so that I can save the current variables: -->
+<input type="hidden" id="variable-list" value=""/>
+
+<button id="reset" type="button" class="btn btn-default" aria-label="Arrow Left">
+  <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> Reset</span></button>
+
+
+    <div class="container" style="margin-top:20px;">
+
+	<div class= 'rows'>
+
+			<div class="col-xs-12 col-md-3" id= "left_div">
+        		<table class="table table-condensed" >
+        		<th></th><th> Variable Names </th>
+        		{% for v in variables %}
+            		<tr>
+                		<td>{{ loop.index }}</td>
+                		<td><a class= "variable" id= {{v}} href="#" > {{ v}} </a></td>
+            		</tr>
+        		{% endfor %}
+        		</table>
+   	
+ 			</div><!-- end: variable div -->
+
+ 	    <div class="col-xs-12 col-md-4 right_div">
+
+  			{{data|safe}}
+		</div>
+      <div class= "col-md-5" id="chart">
+      <button id="multi_bar" type="button" class="btn btn-default">
+  <span class="glyphicon" aria-hidden="true"> Multi-Bar Plot</span>
+  <img src="{{ url_for('static', filename='preview_images/multi-bar.png')}}"/></button>
+
+    <div id="chart">
+      <svg></svg>
+      </div>
+        
+      </div>
+	</div>
+
+	</div>
+	
+	
+ 
+</body>
+</html>
