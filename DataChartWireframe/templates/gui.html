@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>TwoRavens</title>
+        
+        <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap-theme.min.css')}}">
+        
+        <link rel="stylesheet" href="{{ url_for('static', filename = 'app.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static', filename = 'timi.css')}}">
+
+
+        <link rel='stylesheet' href= "{{ url_for('static', filename = 'nv.d3.css')}}">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+            <!-- Load d3.v3.js and nv.d3.js -->
+        <script src="{{ url_for('static', filename='d3/d3.v3.js')}}"></script>
+        <script src="{{ url_for('static', filename='d3/nv.d3.js')}}"></script>
+
+
+        
+        <script type="text/javascript" src="{{ url_for('static', filename='jquery/jquery.min.js')}}"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        
+        <script type="text/javascript" src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js')}}"></script>
+
+        <script src="{{ url_for('static', filename='app.js')}}"></script>
+        <script src="{{ url_for('static', filename='chart.js')}}"></script>
+        <script src="{{ url_for('static', filename='bivariate_chart.js')}}"></script>
+
+        <script src="http://code.highcharts.com/highcharts.js"></script>
+        <script src="http://code.highcharts.com/highcharts-more.js"></script>
+        <script src="http://code.highcharts.com/modules/exporting.js"></script>
+        <script src="http://code.highcharts.com/highcharts-3d.js"></script>
+        <script src="http://code.highcharts.com/modules/heatmap.js"></script>
+
+  </head>
+
+  <body>
+      
+    <nav id="option" class="navbar navbar-default" role="navigation">
+          <div>
+              <div class="navbar-header" >
+              <!-- later can add: 'onmouseover="about();" onmouseout="closeabout();'' -->
+                  <img src="{{ url_for('static', filename='images/TwoRavens.png')}}" alt="TwoRavens" width="100" style="margin-left:2em;margin-top:-0.5em"><strong>SUPER MEGA BETA!!! :)</strong>
+                  <div id="about" class="panel panel-default" style="position:absolute; left:140px; width:380px; display:none; z-index:50;">
+                    <div class="panel-body"> </div>
+                  </div>
+              </div>
+                 
+              <div class="field" id="datasetName" style="text-align:center;margin-top:0.5em">
+                  <h4 style="display:inline;">Dataset Name</h4>
+
+
+            <!-- Modal -->
+              <button class="btn btn-default" id="preview_button" title="Make Table" style="margin-left:1em;" data-toggle="modal" data-target="#myModal">
+                <span style="font-size:1em;color:##29293D; pointer-events:none;" class="glyphicon glyphicon-list-alt"> Preview Data</span>
+              </button>
+
+              
+              <!-- End Modal -->
+
+                  <div id="transformations" class="transformTool">
+                  </div>
+              </div>  
+          </div>
+      </nav>
+    
+    <div id="main" class="left svg-leftpanel svg-rightpanel">
+
+    <!-- hidden input so that I can save the current variables: -->
+    <input type="hidden" id="variable-list" value=""/>
+        
+        <!-- Carousel items -->
+      <!--   <div class="carousel-inner">
+        </div> -->
+
+
+        <!-- Select Chart -->
+        <div id="select-chart" class="row" style="width: calc(100% - 500px); margin:60px auto 0 auto;">
+
+        <div class="alert alert-warning alert-dismissible fade in" role="alert" id="bivariate_warning">
+            <h4>Are you sure you want to abandon this workspace?</h4>
+            <p>Switching to bivariate mode will refresh the workspace. Would you like to continue?</p>
+            <p>
+              <button id='continue_to_bivariate' type="button" class="btn btn-success">Continue to bivariate plotting</button>
+              <button id='dismiss_bivariate' type="button" class="btn btn-default">Back</button>
+            </p>
+        </div>
+
+          <div >
+
+            <a href="#" class="chart_button" id='multi_bar'>
+              <span class="glyphicon" aria-hidden="true"> Multi-Bar Plot<br><img src="{{ url_for('static', filename='preview_images/multi-bar.png')}}"/></span>
+            </a>
+
+            <a href="#" class="chart_button" id='stacked_area'>
+              <span class="glyphicon" aria-hidden="true"> Filled Density Plot<br><img src="{{ url_for('static', filename='preview_images/stacked-area.png')}}"/></span>
+            </a>
+
+            <a href="#" class="chart_button" id='pie_chart'>
+              <span class="glyphicon" aria-hidden="true"> Interactive Pie Chart<br><img src="{{ url_for('static', filename='preview_images/pie-chart.png')}}"/></span>
+            </a>
+
+
+            <a href="#" class="chart_button" id='scatter_plot_continuous'>
+             <span class="glyphicon" aria-hidden="true"> Scatter Plot<br> <img src="{{ url_for('static', filename='preview_images/scatter-plot.png')}}"/></span>   
+            </a>
+
+            <a href="#" class="chart_button" id='line'>
+              <span class="glyphicon" aria-hidden="true"> Line Density Chart<br><img src="{{ url_for('static', filename='preview_images/line.png')}}"/></span>
+            </a>
+
+        </div>
+
+
+        <!-- Chart -->
+        <div id="chart-block">
+
+
+        <!-- warning messages -->
+          <div display:'block' id= 'warning'></div>
+
+          
+
+          <div id="chart">
+            <svg></svg>
+          </div>
+        </div>
+
+        <div class="buttonBlock-Charts" style="top:0; right:21%; margin-right:10px; margin-top:10px; position:absolute;">
+              <div class="btn-group chart_options" style="margin-left:0;">
+              <button type="button" class="btn btn-sm btn-default switch switch_bivariate" id="btnAddItem"  title="Bivariate Mode"><span class="glyphicon glyphicon-transfer" style="color:#818181;"></span> Switch To Multivariate Plotting</button>
+              <button type="button" class="btn btn-sm btn-default" id="btnAddItem"  title="Select Chart"><span class="glyphicon glyphicon-stats" style="color:#818181;"></span> Select Chart</button>
+              <button type="button" class="btn btn-sm btn-default reset" id="btnAddItem" title="Refresh Workspace"><span class="glyphicon glyphicon-refresh" style="color:#818181;"></span> Refresh Workspace</button>
+          </div>
+        </div>
+
+       
+
+        <div id="leftpanel" class="sidepanel container clearfix">
+            
+            <div id="toggleLpanelicon" class="panelbar"><span>&#9679;<br/>&#9679;<br/>&#9679;<br/>&#9679;</span></div>
+            <div class="panel-heading text-center" id="leftpaneltitle">
+                <h3 class="panel-title">Data Selection</h3>
+            </div>
+            
+            <div class="btn-toolbar" role="toolbar" style="margin-left:10px;margin-top:.5em;">
+                <div class="btn-group" style="margin-left:0;">
+                    <button type="button" class="btn active" id="btnPanel1" onclick="lefttab='tab1'; subsetOff(); tabLeft('tab1');">Variables</button>
+                    <button type="button" class="btn btn-default" id="btnPanel2" onclick="lefttab='tab2'; subset(); tabLeft('tab2');">Subset</button>
+                </div>
+                <button type="button" class="btn btn-default ladda-button" id="btnSelect" style="display:none; float:right; margin-right:10px;" onclick="subsetSelect('btnSelect');" data-spinner-color="#000000" data-style="zoom-in"><span class="ladda-label">Select</span></button>
+            </div>
+            <div class="row-fluid">
+                <div id="leftpanelcontent">
+                    <div id="leftContentArea" style="overflow: scroll; height:488px;">
+
+                      {% for k,v in variable_info_dict.items() %}
+                        <div id="tab1" style="display:block;padding:1px 12px;text-align:center">
+                          <p id={{k}} class="variable" style="background-color: rgb(240, 248, 270);" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="right" data-html="true" onmouseover="$(this).popover('toggle');" onmouseout="$(this).popover('toggle');" data-original-title="Summary Statistics" data-content='{{v|safe}}'>{{k}}</p>
+                        </div>
+
+                      {% endfor %}
+                    </div>
+                        <div id="tab2" style="display:none;">
+                        </div>
+                        <div id="tab3">
+                            <p style="padding:.5em 1em;">Select a variable from within the visualization in the center panel to view its summary statistics.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="rightpanel" class="sidepanel container clearfix">
+          <div id="toggleRpanelicon" class="panelbar"><span>&#9679;<br/>&#9679;<br/>&#9679;<br/>&#9679;</span></div>
+          
+          <div class="panel-heading text-center" id="rightpaneltitle">
+              <h3 id='right_panel_title' class="panel-title">Data Tools</h3>
+          </div>
+
+
+
+          <!--<div class="panel-heading text-center" id="rightpaneltitle">
+              <h3 class="panel-title">Model Selection</h3>
+          </div>
+         
+          <div class="btn-toolbar" role="toolbar" style="margin-left:0;margin-top:.5em;">
+             <div class="btn-group" style="margin-right:0;">
+                 <button type="button" class="btn active" id="btnModels" onclick="righttab='models'; setxOff(); tabRight('btnModels');">Models</button>
+                 <button type="button" class="btn btn-default" id="btnSetx" onclick="righttab='setx'; setx(); tabRight('btnSetx');">Set Covar.</button>
+                 <button type="button" class="btn btn-default" id="btnResults" onclick="resultsView();">Results</button>
+             </div>
+          </div>-->
+
+          <div class="row-fluid">
+              <div id="rightpanelcontent">
+
+                    
+                     
+                         
+                        
+
+
+                  <div id="rightContentArea" style="overflow:scroll; height:488px;">
+
+
+                      <div id= 'scatter_controls'>
+                        <button class="btn btn-default multivariate_buttons" type="button" data-toggle="collapse" id='scatter_control_button'
+                          data-target='#scatter_collapse' aria-expanded="false" aria-controls="collapseExample">
+                          2D/3D Bubble Plot
+                        </button>
+
+                        <div class='collapse' id='scatter_collapse'>
+                          <p id='input_group'>
+                            <span class="input-group-addon" id="sizing-addon2">X</span>
+                              <input id='x_value_scatter' type="text" class="form-control" placeholder="X-Axis" aria-describedby="sizing-addon2" value=''><br>
+                            <span class="input-group-addon" id="sizing-addon2">Y</span>
+                              <input id='y_value_scatter' type="text" class="form-control" placeholder="Y-Axis" aria-describedby="sizing-addon2" value=''><br>
+                            <span class="input-group-addon" id="sizing-addon2">Z</span>
+                              <input id='z_value_scatter' type="text" class="form-control" placeholder="(Optional) Z-Axis" aria-describedby="sizing-addon2" value="">
+                            <button id='submit_scatter_inputs' type="button" class="btn btn-info submit_button" data-container='body' data-toggle='popover' data-placement='bottom' data-trigger='focus' data-content>Render!</button>
+                          </p>
+                        </div>
+                      </div>
+
+                      <div id= 'stacked_percent_controls'>
+                        <button class="btn btn-default multivariate_buttons" type="button" data-toggle="collapse" id='stacked_percent_bar_button'
+                          data-target='#stacked_percent_bar' aria-expanded="false" aria-controls="collapseExample">
+                          Stacked Percent Bars
+                        </button>
+
+                        <div class='collapse' id='stacked_percent_bar'>
+                          <p id='input_group'>
+                            <span class="input-group-addon" id="sizing-addon2">X</span>
+                              <input id='x_value_percent_bar' type="text" class="form-control" placeholder="X-Axis" aria-describedby="sizing-addon2" value=''><br>
+                            <span class="input-group-addon" id="sizing-addon2">Y</span>
+                              <input id='y_value_percent_bar' type="text" class="form-control" placeholder="Y-Axis" aria-describedby="sizing-addon2" value=''><br>
+                            <button id='submit_stacked_percent_bar' type="button" class="btn btn-info submit_button" data-container='body' data-toggle='popover' data-placement='bottom' data-trigger='focus' data-content>Render!</button>
+                          </p>
+                        </div>
+                      </div>
+
+                      <div id= 'simple_heat_map_controls'>
+                        <button class="btn btn-default multivariate_buttons" type="button" data-toggle="collapse" id='simple_heat_map_button'
+                          data-target='#simple_heat_map_collapse' aria-expanded="false" aria-controls="collapseExample">
+                          Simple Heat Map
+                        </button>
+
+                        <div class='collapse' id='simple_heat_map_collapse'>
+                          <p id='input_group'>
+                            <span class="input-group-addon" id="sizing-addon2">X Axis</span>
+                              <input id='x_value_simple_heat_map' type="text" class="form-control" placeholder="X-Axis" aria-describedby="sizing-addon2" value=''><br>
+                            <span class="input-group-addon" id="sizing-addon2">Y Axis</span>
+                              <input id='y_value_simple_heat_map' type="text" class="form-control" placeholder="Y-Axis" aria-describedby="sizing-addon2" value=''><br>
+                            <button id='submit_simple_heat_map' type="button" class="btn btn-info submit_button" data-container='body' data-toggle='popover' data-placement='bottom' data-trigger='focus' data-content>Render!</button>
+                          </p>
+                        </div>
+                      </div>
+
+                    <div id= 'range_area_controls'>
+                        <button class="btn btn-default multivariate_buttons" type="button" data-toggle="collapse" id='range_area_button'
+                          data-target='#range_area_collapse' aria-expanded="false" aria-controls="collapseExample">
+                          Line And Range Chart
+                        </button>
+
+                        <div class='collapse' id='range_area_collapse'>
+                          <p id='input_group'>
+                            <span class="input-group-addon" id="sizing-addon2">X Axis</span>
+                              <input id='x_value_range_area' type="text" class="form-control" placeholder="X-Axis" aria-describedby="sizing-addon2" value=''><br>
+                            <span class="input-group-addon" id="sizing-addon2">Y Axis</span>
+                              <input id='y_value_range_area' type="text" class="form-control" placeholder="Y-Axis" aria-describedby="sizing-addon2" value=''><br>
+                            <button id='submit_range_area' type="button" class="btn btn-info submit_button" data-container='body' data-toggle='popover' data-placement='bottom' data-trigger='focus' data-content=>Render!</button>
+                          </p>
+                        </div>
+                      </div>
+
+
+
+                      
+                      <div id = 'sum_stats_preview'></div>
+                    <hr>
+                    <!-- json popopu -->
+                    <a href="javascript:popup()" class="btn btn-md btn-success id" style="margin-left: 3px}" id="json_popup"
+        >Open chart JSON data</a>
+
+                    
+                    
+
+
+
+                  </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <!-- Div containing all the Modal Content (organizational purposes) -->
+        <div title='hardcoded_modal_content'>
+          <!-- Preview Button Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title" id="myModalLabel">Preview Data  <br> <h6> Number of Rows: <b>{{total_rows}}</b>    –   Number of Columns: <b>{{total_cols}}</b></h6></h4>
+                    </div>
+                    <div class="modal-body">
+                      {{data|safe}}
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <!-- End Preview Button modal-->
+          </div>
+          <!-- Content for maodals made on the fly -->
+          <div title='dynamic_modal_content' id='modal_content_div'></div>
+
+    </div>
+
+<script>
+  $(document).ready(function() {
+    // DO SOMETHING
+  });
+
+  // Open/Close Panels
+  $('#leftpanel span').click(function(){
+      closeLeftPanel();
+  });
+  $('#rightpanel span').click(function(){
+      closeRightPanel();
+  });
+  
+  function closeLeftPanel() {
+      if ($('#leftpanel').hasClass('forceclosepanel')) {
+        // do nothing
+      } else {
+          /*$('#leftpanel .btn-toolbar').hide();*/
+          $('#leftpanel').removeClass('expandpanel');
+          $('#leftpanel > div.row-fluid').toggleClass('closepanel');
+          $('#leftpanel').toggleClass('closepanel');
+          $('#main').toggleClass('svg-leftpanel');
+          $('#btnSelect').css('display','none');
+      }
+  };
+  function closeRightPanel() {
+      if ($('#leftpanel').hasClass('forceclosepanel')) {
+        // do nothing
+      } else {
+      /*$('#rightpanel .nav-tabs').hide();*/
+      $('#rightpanel').removeClass('expandpanel');
+      $('#rightpanel > div.row-fluid').toggleClass('closepanel');
+      $('#rightpanel').toggleClass('closepanel');
+      $('#main').toggleClass('svg-rightpanel');
+      }
+  };
+
+  var myurl=window.location.toString();
+  var fileid="";
+  var cindex=0;
+  if (myurl.indexOf("dfId=") > 0) {
+    fileid=myurl.substring(myurl.indexOf("dfId=")+5);
+    cindex=fileid.indexOf("&");
+    if (cindex > 0) {
+      fileid=fileid.substring(0,cindex);
+    };
+  };
+  var hostname="";
+  if (myurl.indexOf("host=") > 0) {
+    hostname=myurl.substring(myurl.indexOf("host=")+5);
+    cindex=hostname.indexOf("&");
+    if (cindex > 0) {
+      hostname=hostname.substring(0,cindex);
+    };
+  };
+
+  console.log("fileid: "+fileid);
+  console.log("hostname: "+hostname);
+  
+</script>
+
+
+  </body>
+</html>
+

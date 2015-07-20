@@ -1,0 +1,2 @@
+recursive-include DataChartWireframe/templates *
+recursive-include DataChartWireframe/static *

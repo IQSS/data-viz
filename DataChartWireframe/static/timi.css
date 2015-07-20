@@ -1,0 +1,79 @@
+ .chart_button{
+      width: 430px;
+      height: 210px;
+      margin: 4px;
+    }
+
+    .sumstats_modals{margin: 4px;}
+
+.nvd3 rect[height="1"] {
+  display: none !important;
+}
+
+.modal .modal-body {
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+    .metadata_header{
+      font-size: 16px;
+    }
+    
+    .red{
+      background-color: rgba(250, 128, 114, 0.5);
+    }
+    #chart svg {
+      width: 752px;
+      height: 500px;
+
+
+
+}    
+
+
+
+
+.chart_button{
+  margin: 5px;
+}
+
+#main.svg-leftpanel.svg-rightpanel svg {
+  width: 100%;
+}
+#main.svg-leftpanel svg, #main.svg-rightpanel svg {
+   width: calc(100% - 300px); 
+}
+
+    #reset{
+      visibility: hidden;
+
+    }
+
+
+.submit_button{
+  text-align: center;
+  margin: 7px;
+  margin-left: 66px;
+}
+#rightpanel{
+  z-index: 0;
+}
+.variable{
+  z-index: 1;
+}
+/*.chart_icon{
+  max-width: 160px;
+}*/
+.chart_button img {
+  margin-top: 7px;
+}
+#rightpanel #rightContentArea #scatter_controls {
+  display: block;
+}
+.multivariate_buttons{
+  margin-left: 30px;
+  margin-bottom: 5px;
+}
+.highcharts_container{
+  height: 600px;
+}

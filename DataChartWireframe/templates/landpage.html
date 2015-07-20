@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head>
+     <script type="text/javascript" src="{{ url_for('static', filename='jquery/jquery.min.js')}}"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+		$('#submit_landpage').on('click',function(){
+			var link = $('#landpage').val();
+			var index_id = link.indexOf('Id=')
+			fileid = link.substring(index_id+3, index_id+10)
+			window.location.href = 'http://127.0.0.1:5000/'+fileid+'/';
+		})
+	});
+	</script>
+	</head>
+	<body>
+	Enter a TwoRavens url of your desire dataset to get started: <input id="landpage"> </input><button id="submit_landpage">Submit</button>
+		
+	</body>
+</html>
