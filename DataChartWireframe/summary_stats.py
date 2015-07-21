@@ -1,9 +1,10 @@
-
+from blender import Blender
 
 class SummaryStats(object):
 
     def __init__(self, args):
 
+        self.blender = Blender('vitamix')
         # initialized, to be defined later
         #
         self.data_multibar = None
@@ -89,13 +90,15 @@ class SummaryStats(object):
 
 
     def get_dict_for_web(self):
-        return self.__dict__
-        """
+        #return self.__dict__
+
         d = {}
         for k, v in self.__dict__.items():
-            d[k] = v
+            if k == 'blender':
+                d['blender'] = v.get_dict_for_web()
+            else:
+                d[k] = v
         return d
-        """
 
 if __name__=='__main__':
     args = None

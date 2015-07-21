@@ -23,6 +23,18 @@ class Appliance(object):
             d[k] = v
         return d
 
+
+class Blender(Appliance):
+
+
+    def run_appliance(self, speed_level=1):
+
+        if speed_level > 5:
+            print "it's liquified!"
+        else:
+            print "all done!"
+
+
 '''
 class Blender(Appliance):
 
@@ -38,7 +50,8 @@ if __name__=='__main__':
     print a.name
     a.run_appliance()
 
-    b = Appliance('toaster2')
+
+    b = Blender('blender!')
     b.run_appliance(7)
 
-    print a.get_dict_for_web()
+    #print a.get_dict_for_web()
