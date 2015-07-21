@@ -1,0 +1,1 @@
+TwoRavens is a projects by Harvard University's Institute of Quantitative Social Science (IQSS), which takes tabular data from their online data repository called the 'Dataverse,' and provides analysis options. This project is intended to augment TwoRavens by adding additional visualization functionality, providing both univiariate and multivariate d3.js visualizations. 

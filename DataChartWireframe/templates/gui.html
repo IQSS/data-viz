@@ -27,6 +27,7 @@
 
         <script src="{{ url_for('static', filename='app.js')}}"></script>
         <script src="{{ url_for('static', filename='chart.js')}}"></script>
+        <script src="{{ url_for('static', filename='chart_reset.js')}}"></script>
         <script src="{{ url_for('static', filename='bivariate_chart.js')}}"></script>
 
         <script src="http://code.highcharts.com/highcharts.js"></script>
@@ -34,6 +35,12 @@
         <script src="http://code.highcharts.com/modules/exporting.js"></script>
         <script src="http://code.highcharts.com/highcharts-3d.js"></script>
         <script src="http://code.highcharts.com/modules/heatmap.js"></script>
+
+        
+        <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.js"></script>
+        <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+        <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css">
+
 
   </head>
 
@@ -55,7 +62,7 @@
 
             <!-- Modal -->
               <button class="btn btn-default" id="preview_button" title="Make Table" style="margin-left:1em;" data-toggle="modal" data-target="#myModal">
-                <span style="font-size:1em;color:##29293D; pointer-events:none;" class="glyphicon glyphicon-list-alt"> Preview Data</span>
+                <span style="font-size:1em;color:##29293D; pointer-events:none;" class="glyphicon glyphicon-list-alt"> View Data</span>
               </button>
 
               
@@ -226,6 +233,23 @@
                         </div>
                       </div>
 
+                      <div id= 'basic_bar_controls'>
+                        <button class="btn btn-default multivariate_buttons" type="button" data-toggle="collapse" id='basic_bar_button'
+                          data-target='#basic_bar' aria-expanded="false" aria-controls="collapseExample">
+                          Simple Bar Chart
+                        </button>
+
+                        <div class='collapse' id='basic_bar'>
+                          <p id='input_group'>
+                            <span class="input-group-addon" id="sizing-addon2">X</span>
+                              <input id='x_value_basic_bar' type="text" class="form-control" placeholder="X-Axis" aria-describedby="sizing-addon2" value=''><br>
+                            <span class="input-group-addon" id="sizing-addon2">Y</span>
+                              <input id='y_value_basic_bar' type="text" class="form-control" placeholder="Y-Axis" aria-describedby="sizing-addon2" value=''><br>
+                            <button id='submit_basic_bar' type="button" class="btn btn-info submit_button" data-container='body' data-toggle='popover' data-placement='bottom' data-trigger='focus' data-content>Render!</button>
+                          </p>
+                        </div>
+                      </div>
+
                       <div id= 'stacked_percent_controls'>
                         <button class="btn btn-default multivariate_buttons" type="button" data-toggle="collapse" id='stacked_percent_bar_button'
                           data-target='#stacked_percent_bar' aria-expanded="false" aria-controls="collapseExample">
@@ -239,6 +263,23 @@
                             <span class="input-group-addon" id="sizing-addon2">Y</span>
                               <input id='y_value_percent_bar' type="text" class="form-control" placeholder="Y-Axis" aria-describedby="sizing-addon2" value=''><br>
                             <button id='submit_stacked_percent_bar' type="button" class="btn btn-info submit_button" data-container='body' data-toggle='popover' data-placement='bottom' data-trigger='focus' data-content>Render!</button>
+                          </p>
+                        </div>
+                      </div>
+
+                      <div id= 'stacked_count_controls'>
+                        <button class="btn btn-default multivariate_buttons" type="button" data-toggle="collapse" id='stacked_count_bar_button'
+                          data-target='#stacked_count_bar' aria-expanded="false" aria-controls="collapseExample">
+                          Stacked Frequency Bars
+                        </button>
+
+                        <div class='collapse' id='stacked_count_bar'>
+                          <p id='input_group'>
+                            <span class="input-group-addon" id="sizing-addon2">X</span>
+                              <input id='x_value_count_bar' type="text" class="form-control" placeholder="X-Axis" aria-describedby="sizing-addon2" value=''><br>
+                            <span class="input-group-addon" id="sizing-addon2">Y</span>
+                              <input id='y_value_count_bar' type="text" class="form-control" placeholder="Y-Axis" aria-describedby="sizing-addon2" value=''><br>
+                            <button id='submit_stacked_count_bar' type="button" class="btn btn-info submit_button" data-container='body' data-toggle='popover' data-placement='bottom' data-trigger='focus' data-content>Render!</button>
                           </p>
                         </div>
                       </div>
@@ -301,8 +342,8 @@
         <!-- Div containing all the Modal Content (organizational purposes) -->
         <div title='hardcoded_modal_content'>
           <!-- Preview Button Modal -->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
+            <div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog modal-lg" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -326,7 +367,9 @@
 
 <script>
   $(document).ready(function() {
-    // DO SOMETHING
+    $('#preview_DataTable').DataTable();
+    $('#preview_DataTable').addClass('table table-striped');
+  
   });
 
   // Open/Close Panels

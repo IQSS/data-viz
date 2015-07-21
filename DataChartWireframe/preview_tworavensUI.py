@@ -570,19 +570,21 @@ def preview(fileid):
 
 	global df_global
 	df_global = df
-	df_preview = df[1:16]
+	
 
-
+	
     #create variable names for varaible table
 	variables = df.columns   
 
 	total_rows = df.shape[0]
 	total_cols = df.shape[1]
-   #Create HTML of pandas dataframe 
-	df_html_unclassed = df_preview.to_html(index = False)
-	start = df_html_unclassed.find('class="')
-	stop = df_html_unclassed.find(">")
-	df_html= df_html_unclassed[:start] + 'class = "table table-striped"' + df_html_unclassed[stop:]
+   #Create HTML of pandas dataframe
+	df.index += 1 
+	df_html = df.to_html()
+	start = df_html.find('class="dataframe"')
+	df_html = df_html[:start] + 'id = "preview_DataTable"' + df_html[start+1:]
+
+
 
 	
 	r_dataframe = com.convert_to_r_dataframe(df_global)
@@ -849,7 +851,6 @@ def range_area():
 
 						data_range_area.append(sub_list)
 
-
 					if df_full[x_value].dtype == 'int64' or df_full[x_value].dtype == 'float64':
 						data_range_area.sort(key=lambda x: x[0])
 
@@ -974,6 +975,11 @@ def percent_bars():
 
 	x_or_y_missing= False
 	repeated_variables = False
+	x_too_large = False
+	y_too_large = False
+	y_var_character = False
+	series = None
+	x_categories = None
 
 
 	if x_value == '' or y_value == '':
@@ -989,24 +995,78 @@ def percent_bars():
 				inputs_valid = False
 
 			else: #all inputs valid
-
 				col_list = [x_value, y_value]
 				df= df_global[col_list]
 				df_full = df.dropna()
 
 				x_categories = list(set(list(df_full[x_value])))
 
-				n_rows = df_full.shape[0]
 
-				points_list 
-				for row in range(0, n_rows):
-					pass
-				
+				if len(x_categories) > 20:
+					x_too_large = True
+
+				else:#x not too large
+
+					y_categories = list(set(list(df_full[y_value])))
+					if len(y_categories) > 20:
+						y_too_large = True
+
+					else: # y not too large
+
+						if pandas.Series(y_categories).dtype != 'float64' and pandas.Series(y_categories).dtype != 'int64':
+							y_var_character = True
+						else:
+
+							if pandas.Series(x_categories).dtype == 'float64' or pandas.Series(x_categories).dtype == 'int64':
+								x_categories.sort()
+
+
+							n_rows = df_full.shape[0]
+
+							points_dict = dict()
+							for row in range(0, n_rows):
+								point = (df_full.iloc[row][x_value],df_full.iloc[row][y_value])
+
+								if point in points_dict:
+									points_dict[point] += 1
+								else:
+									points_dict[point] = 1
+
+							freq_list = list()
+							for i in points_dict:
+								freq_list.append({i[1]:[i[0],points_dict[i]]})
+
+							series= list()
+							len_categories = len (x_categories)
+
+							
+							for i in y_categories:
+								series.append({'name':str(i), 'data': [0]*len_categories})
+
+							
+							for i in freq_list:
+								for each in series:
+									key = i.keys()
+									key = str(key)
+									key = key.replace('[','')
+									key = key.replace(']','')
+									if each['name'] == key:
+										index_x = x_categories.index(i.values()[0][0])
+										each['data'][index_x] = i.values()[0][1]
+
+
+
+	
 
 
 
 
-	d= {}
+	d= {'x_or_y_missing':x_or_y_missing,
+	'x_too_large': x_too_large,
+	'y_too_large': y_too_large,
+	'repeated_variables': repeated_variables,
+	'x_categories' : x_categories,
+	'series': series}
 
 	return jsonify(**d)
 

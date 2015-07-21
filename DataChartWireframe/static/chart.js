@@ -1,8 +1,8 @@
 //this is when I started to kill the dreaded barline
 
 var fileid = {fileid};
-var first_time = true;
-var active = false;
+first_time = true;
+active = false;
 
 
 
@@ -33,6 +33,9 @@ $("#scatter_controls").hide();
 $('#range_area_controls').hide();
 $('#simple_heat_map_controls').hide();
 $('#stacked_percent_controls').hide();
+$('#stacked_count_controls').hide();
+$("#basic_bar_controls").hide();
+
 
 
 //turn varaible clicking capability on
@@ -49,7 +52,7 @@ $('.variable').on();
       var new_variable = $(this).attr('id');
 
       function update_variable_list(new_var_name){
-        var variable_list_string = $('#variable-list').val();
+      variable_list_string = $('#variable-list').val();
 
       if (variable_list_string == ''){
             variable_array = [];  // new array
@@ -733,8 +736,8 @@ $('.variable').on();
     });
 
 
-$(function(){
+// $(function(){
   
-$(".reset").on('click', function() {location.reload();
-      });
-});
+// $(".reset").on('click', function() {location.reload();
+//       });
+// });

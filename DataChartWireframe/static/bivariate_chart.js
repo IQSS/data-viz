@@ -37,6 +37,8 @@ $(document).ready(function(){
 				$('#scatter_controls').fadeIn();
 				$('#range_area_controls').fadeIn();
 				$('#simple_heat_map_controls').fadeIn();
+				$('#stacked_percent_controls').fadeIn();
+				$('#stacked_count_controls').fadeIn();
 				//turn previous events off when click variables
 				$('.variable').off();
 
@@ -414,9 +416,209 @@ $(document).ready(function(){
 
 					$.getJSON('http://127.0.0.1:5000/bivariate_percent_bars',{'x_value':x_value, 'y_value':y_value},function(data){
 
+						if(data.x_or_y_missing == true){
+							alert('x or y missing');
+						}
+						else if(data.repeated_variables == true){
+							alert('repeated_variables')
+						}
+						else if (data.x_too_large == true){
+							alert('x too large');
+						}
+						else if (data.y_too_large == true){
+							alert('y too large');
+						}
+						else{
+
+							$(function () {
+						    $('#container').highcharts({
+						        chart: {
+						            type: 'column'
+						        },
+						        title: {
+						            text: 'Stacked Percentage Bar Chart'
+						        },
+						        xAxis: {
+						            categories: data.x_categories,
+						            title:{text:'<b>'+ x_value+'</b>'}
+						        },
+						        yAxis: {
+						            min: 0,
+						            title: {
+						                text: 'Proportion of <b> '+y_value + '</b> by <b>' + x_value +'</b>'
+						            }
+						        },
+						        tooltip: {
+						        	headerFormat:'<b>'+ y_value +'</b> on <b>' +x_value + '</b> of <b>{point.x}</b><br>',
+						            pointFormat: '<span style="color:{series.color}">{series.name}: <b>{point.y}</b> ({point.percentage:.0f}%)<br/></span>',
+						            shared: true
+						        },
+						        plotOptions: {
+						            column: {
+						                stacking: 'percent'
+						            }
+						        },
+						        series: data.series
+						    });
+							});
+
+						}
+
 					});
 
 				});
+
+				$('#submit_stacked_count_bar').on('click',function(){
+
+					var x_value = $('#x_value_count_bar').val();
+					var y_value = $('#y_value_count_bar').val();
+
+					$.getJSON('http://127.0.0.1:5000/bivariate_percent_bars',{'x_value':x_value, 'y_value':y_value},function(data){
+
+						if(data.x_or_y_missing == true){
+							alert('x or y missing');
+						}
+						else if(data.repeated_variables == true){
+							alert('repeated_variables')
+						}
+						else if (data.x_too_large == true){
+							alert('x too large');
+						}
+						else if (data.y_too_large == true){
+							alert('y too large');
+						}
+						else{
+
+							$(function () {
+						    $('#container').highcharts({
+						        chart: {
+						            type: 'column'
+						        },
+						        title: {
+						            text: 'Stacked frequency of <b>' +y_value+ '</b> on <b>'+x_value +'</b>'
+						        },
+						        xAxis: {
+						            categories: data.x_categories,
+						            title: {text: '<b>'+x_value +'</b>'}
+						        },
+						        yAxis: {
+						            min: 0,
+						            title: {
+						                text: 'Frequency of <b>'+ y_value+'</b> on <b>' +x_value + '</b>'
+						            },
+						            stackLabels: {
+						                enabled: true,
+						                style: {
+						                    fontWeight: 'bold',
+						                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+						                }
+						            }
+						        },
+						        legend: {
+						            align: 'right',
+						            x: -30,
+						            verticalAlign: 'top',
+						            y: 25,
+						            floating: true,
+						            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+						            borderColor: '#CCC',
+						            borderWidth: 1,
+						            shadow: false
+						        },
+						        tooltip: {
+						            formatter: function () {
+						                return '<b>' + this.x + '</b><br/>' +
+						                    this.series.name + ': ' + this.y + '<br/>' +
+						                    'Total: ' + this.point.stackTotal;
+						            }
+						        },
+						        plotOptions: {
+						            column: {
+						                stacking: 'normal',
+						                dataLabels: {
+						                    enabled: true,
+						                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+						                    style: {
+						                        textShadow: '0 0 3px black'
+						                    }
+						                }
+						            }
+						        },
+						        series: data.series
+						    });
+							});
+
+						}
+
+					});
+
+				});
+
+					$('#submit_basic_bar').on('click',function(){
+
+					var x_value = $('#x_value_basic_bar').val();
+					var y_value = $('#y_value_basic_bar').val();
+
+					$.getJSON('http://127.0.0.1:5000/bivariate_percent_bars',{'x_value':x_value, 'y_value':y_value},function(data){
+
+						if(data.x_or_y_missing == true){
+							alert('x or y missing');
+						}
+						else if(data.repeated_variables == true){
+							alert('repeated_variables')
+						}
+						else if (data.x_too_large == true){
+							alert('x too large');
+						}
+						else if (data.y_too_large == true){
+							alert('y too large');
+						}
+						else{
+
+							$(function () {
+						    $('#container').highcharts({
+						        chart: {
+						            type: 'column'
+						        },
+						        title: {
+						            text: 'Monthly Average Rainfall'
+						        },
+						        subtitle: {
+						            text: 'Source: WorldClimate.com'
+						        },
+						        xAxis: {
+						            categories: data.categories,
+						            crosshair: true
+						        },
+						        yAxis: {
+						            min: 0,
+						            title: {
+						                text: 'Rainfall (mm)'
+						            }
+						        },
+						        tooltip: {
+						            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+						            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+						                '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+						            footerFormat: '</table>',
+						            shared: true,
+						            useHTML: true
+						        },
+						        plotOptions: {
+						            column: {
+						                pointPadding: 0.2,
+						                borderWidth: 0
+						            }
+						        },
+						        series: data.series
+						    });
+							});
+
+						}
+
+						});
+
+					});
 
 
 
