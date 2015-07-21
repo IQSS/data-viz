@@ -972,6 +972,8 @@ def percent_bars():
 
 	x_value = request.args.get("x_value", default = None, type=str)
 	y_value = request.args.get('y_value', default = None, type=str)
+	is_area_chart = request.args.get('is_area_chart', default=None, type=str)
+
 
 	x_or_y_missing= False
 	repeated_variables = False
@@ -980,6 +982,7 @@ def percent_bars():
 	y_var_character = False
 	series = None
 	x_categories = None
+	inputs_valid = True
 
 
 	if x_value == '' or y_value == '':
@@ -1001,63 +1004,61 @@ def percent_bars():
 
 				x_categories = list(set(list(df_full[x_value])))
 
+				if is_area_chart == 'false':
+					if len(x_categories) > 20:
+						x_too_large = True
 
-				if len(x_categories) > 20:
-					x_too_large = True
+				
+				y_categories = list(set(list(df_full[y_value])))
+				if len(y_categories) > 20:
+					y_too_large = True
 
-				else:#x not too large
+				else: # y not too large
 
-					y_categories = list(set(list(df_full[y_value])))
-					if len(y_categories) > 20:
-						y_too_large = True
+					if pandas.Series(y_categories).dtype != 'float64' and pandas.Series(y_categories).dtype != 'int64':
+						y_var_character = True
+					else:
 
-					else: # y not too large
-
-						if pandas.Series(y_categories).dtype != 'float64' and pandas.Series(y_categories).dtype != 'int64':
-							y_var_character = True
-						else:
-
-							if pandas.Series(x_categories).dtype == 'float64' or pandas.Series(x_categories).dtype == 'int64':
-								x_categories.sort()
+						if pandas.Series(x_categories).dtype == 'float64' or pandas.Series(x_categories).dtype == 'int64':
+							x_categories.sort()
 
 
-							n_rows = df_full.shape[0]
+						n_rows = df_full.shape[0]
 
-							points_dict = dict()
-							for row in range(0, n_rows):
-								point = (df_full.iloc[row][x_value],df_full.iloc[row][y_value])
+						points_dict = dict()
+						for row in range(0, n_rows):
+							point = (df_full.iloc[row][x_value],df_full.iloc[row][y_value])
 
-								if point in points_dict:
-									points_dict[point] += 1
-								else:
-									points_dict[point] = 1
+							if point in points_dict:
+								points_dict[point] += 1
+							else:
+								points_dict[point] = 1
 
-							freq_list = list()
-							for i in points_dict:
-								freq_list.append({i[1]:[i[0],points_dict[i]]})
+						freq_list = list()
+						for i in points_dict:
+							freq_list.append({i[1]:[i[0],points_dict[i]]})
 
-							series= list()
-							len_categories = len (x_categories)
+						series= list()
+						len_categories = len (x_categories)
 
-							
-							for i in y_categories:
-								series.append({'name':str(i), 'data': [0]*len_categories})
+						
+						for i in y_categories:
+							series.append({'name':str(i), 'data': [0]*len_categories})
 
-							
-							for i in freq_list:
-								for each in series:
-									key = i.keys()
-									key = str(key)
-									key = key.replace('[','')
-									key = key.replace(']','')
-									if each['name'] == key:
-										index_x = x_categories.index(i.values()[0][0])
-										each['data'][index_x] = i.values()[0][1]
+						
+						for i in freq_list:
+							for each in series:
+								key = i.keys()
+								key = str(key)
+								key = key.replace('[','')
+								key = key.replace(']','')
+								if each['name'] == key:
+									index_x = x_categories.index(i.values()[0][0])
+									each['data'][index_x] = i.values()[0][1]
 
 
 
 	
-
 
 
 
@@ -1066,7 +1067,8 @@ def percent_bars():
 	'y_too_large': y_too_large,
 	'repeated_variables': repeated_variables,
 	'x_categories' : x_categories,
-	'series': series}
+	'series': series,
+	'inputs_valid':inputs_valid}
 
 	return jsonify(**d)
 

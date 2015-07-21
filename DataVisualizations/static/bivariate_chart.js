@@ -42,6 +42,7 @@ $(document).ready(function(){
 				$('#stacked_percent_controls').fadeIn();
 				$('#stacked_count_controls').fadeIn();
 				$('#basic_bar_controls').fadeIn();
+				$('#simple_area_controls').fadeIn();
 				//turn previous events off when click variables
 				$('.variable').off();
 
@@ -417,19 +418,27 @@ $(document).ready(function(){
 					var x_value = $('#x_value_percent_bar').val();
 					var y_value = $('#y_value_percent_bar').val();
 
-					$.getJSON('http://127.0.0.1:5000/bivariate_percent_bars',{'x_value':x_value, 'y_value':y_value},function(data){
+					$.getJSON('http://127.0.0.1:5000/bivariate_percent_bars',{'x_value':x_value, 'y_value':y_value,'is_area_chart':'false'},function(data){
 
 						if(data.x_or_y_missing == true){
-							alert('x or y missing');
+							$('#submit_stacked_percent_bar').attr('data-content', 'Chart not created. Please specify a variable name for both the "X" and "Y" axises.');
+							$('#submit_stacked_percent_bar').focus();
 						}
 						else if(data.repeated_variables == true){
-							alert('repeated_variables')
+							$('#submit_stacked_percent_bar').attr('data-content', 'Chart not created. No variable may be used for both the "X" and "Y" fields.');
+							$('#submit_stacked_percent_bar').focus();
+						}
+						else if(data.inputs_valid == false){
+							$('#submit_stacked_percent_bar').attr('data-content','Chart not created. All variable names must be valid variables. ');
+							$('#submit_stacked_percent_bar').focus();
 						}
 						else if (data.x_too_large == true){
-							alert('x too large');
+							$('#submit_stacked_percent_bar').attr('data-content', 'Chart not created. '+ x_value +' has too many unique values. Please choose another variable as your x_axis.');
+							$('#submit_stacked_percent_bar').focus();
 						}
 						else if (data.y_too_large == true){
-							alert('y too large');
+							$('#submit_stacked_percent_bar').attr('data-content','Chart not created. '+y_value +' has too many unique values. Please choose another variable as your y_axis.');	
+							$('#submit_stacked_percent_bar').focus();
 						}
 						else{
 
@@ -476,19 +485,27 @@ $(document).ready(function(){
 					var x_value = $('#x_value_count_bar').val();
 					var y_value = $('#y_value_count_bar').val();
 
-					$.getJSON('http://127.0.0.1:5000/bivariate_percent_bars',{'x_value':x_value, 'y_value':y_value},function(data){
+					$.getJSON('http://127.0.0.1:5000/bivariate_percent_bars',{'x_value':x_value, 'y_value':y_value,'is_area_chart':'false'},function(data){
 
 						if(data.x_or_y_missing == true){
-							alert('x or y missing');
+							$('#submit_stacked_count_bar').attr('data-content', 'Chart not created. Please specify a variable name for both the "X" and "Y" axises.');
+							$('#submit_stacked_count_bar').focus();
 						}
 						else if(data.repeated_variables == true){
-							alert('repeated_variables')
+							$('#submit_stacked_count_bar').attr('data-content', 'Chart not created. No variable may be used for both the "X" and "Y" fields.');
+							$('#submit_stacked_count_bar').focus();
+						}
+						else if(data.inputs_valid == false){
+							$('#submit_stacked_count_bar').attr('data-content','Chart not created. All variable names must be valid variables. ');
+							$('#submit_stacked_count_bar').focus();
 						}
 						else if (data.x_too_large == true){
-							alert('x too large');
+							$('#submit_stacked_count_bar').attr('data-content', 'Chart not created. '+ x_value +' has too many unique values. Please choose another variable as your x_axis.');
+							$('#submit_stacked_count_bar').focus();
 						}
 						else if (data.y_too_large == true){
-							alert('y too large');
+							$('#submit_stacked_count_bar').attr('data-content','Chart not created. '+y_value +' has too many unique values. Please choose another variable as your y_axis.');	
+							$('#submit_stacked_count_bar').focus();
 						}
 						else{
 
@@ -562,19 +579,27 @@ $(document).ready(function(){
 					var x_value = $('#x_value_basic_bar').val();
 					var y_value = $('#y_value_basic_bar').val();
 
-					$.getJSON('http://127.0.0.1:5000/bivariate_percent_bars',{'x_value':x_value, 'y_value':y_value},function(data){
+					$.getJSON('http://127.0.0.1:5000/bivariate_percent_bars',{'x_value':x_value, 'y_value':y_value,'is_area_chart':'false'},function(data){
 
 						if(data.x_or_y_missing == true){
-							alert('x or y missing');
+							$('#submit_basic_bar').attr('data-content', 'Chart not created. Please specify a variable name for both the "X" and "Y" axises.');
+							$('#submit_basic_bar').focus();
 						}
 						else if(data.repeated_variables == true){
-							alert('repeated_variables')
+							$('#submit_basic_bar').attr('data-content', 'Chart not created. No variable may be used for both the "X" and "Y" fields.');
+							$('#submit_basic_bar').focus();
+						}
+						else if(data.inputs_valid == false){
+							$('#submit_basic_bar').attr('data-content','Chart not created. All variable names must be valid variables. ');
+							$('#submit_basic_bar').focus();
 						}
 						else if (data.x_too_large == true){
-							alert('x too large');
+							$('#submit_basic_bar').attr('data-content', 'Chart not created. '+ x_value +' has too many unique values. Please choose another variable as your x_axis.');
+							$('#submit_basic_bar').focus();
 						}
 						else if (data.y_too_large == true){
-							alert('y too large');
+							$('#submit_basic_bar').attr('data-content','Chart not created. '+y_value +' has too many unique values. Please choose another variable as your y_axis.');	
+							$('#submit_basic_bar').focus();
 						}
 						else{
 
@@ -584,26 +609,23 @@ $(document).ready(function(){
 						            type: 'column'
 						        },
 						        title: {
-						            text: 'Monthly Average Rainfall'
-						        },
-						        subtitle: {
-						            text: 'Source: WorldClimate.com'
+						            text: '<b>'+y_value+'</b> Values on <b>'+x_value+ ' </b>'
 						        },
 						        xAxis: {
+						        	title:{text:"<b>"+x_value+'</b>'},
 						            categories: data.categories,
 						            crosshair: true
 						        },
 						        yAxis: {
+
 						            min: 0,
 						            title: {
-						                text: 'Rainfall (mm)'
+						                text: 'Frequency of <b>'+y_value+'</b> Values'
 						            }
 						        },
 						        tooltip: {
-						            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-						            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-						                '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
-						            footerFormat: '</table>',
+						            headerFormat: '<b>'+x_value+'</b> of <b>{point.key}</b>',
+						            pointFormat: '<b>'+y_value+'</b>: {series.name} Frequency: <b>{point.y}</b>',
 						            shared: true,
 						            useHTML: true
 						        },
@@ -622,6 +644,65 @@ $(document).ready(function(){
 						});
 
 					});
+
+					$('#submit_simple_area').on('click',function(){
+
+					var x_value = $('#x_value_simple_area').val();
+					var y_value = $('#y_value_simple_area').val();
+
+					$.getJSON('http://127.0.0.1:5000/bivariate_percent_bars',{'x_value':x_value, 'y_value':y_value,'is_area_chart':'true'},function(data){
+
+						if(data.x_or_y_missing == true){
+							$('#submit_simple_area').attr('data-content', 'Chart not created. Please specify a variable name for both the "X" and "Y" axises.');
+							$('#submit_simple_area').focus();
+						}
+						else if(data.repeated_variables == true){
+							$('#submit_simple_area').attr('data-content', 'Chart not created. No variable may be used for both the "X" and "Y" fields.');
+							$('#submit_simple_area').focus();
+						}
+						else if(data.inputs_valid == false){
+							$('#submit_simple_area').attr('data-content','Chart not created. All variable names must be valid variables. ');
+							$('#submit_simple_area').focus();
+						}
+						else if (data.y_too_large == true){
+							$('#submit_simple_area').attr('data-content','Chart not created. '+y_value +' has too many unique values. Please choose another variable as your y_axis.');	
+							$('#submit_simple_area').focus();
+						}
+						else{
+
+						$(function () {
+							$('.popover').hide();
+						    $('#container').highcharts({
+						        chart: {
+						            type: 'area'
+						        },
+						        title: {
+						            text: "<b>"+y_value +'</b> on <b>'+x_value+"</b> Area Chart"
+						        },
+						        xAxis: {
+						        	title:{text:'<b>'+x_value+'</b>'},
+						            categories: data.x_categories
+						        },
+						        yAxis:{
+						        	title:{text:'Frequency of <b>'+y_value+'</b> Values'}
+						        },
+						        tooltip:{
+						        	headerFormat:'<b>'+x_value+':</b> {point.x}<br>',
+						        	pointFormat:'<b>'+y_value+'</b> of <b>{series.name}</b> frequency: <b>{point.y}</b>'
+						        },
+						        credits: {
+						            enabled: false
+						        },
+						        series: data.series
+						    });
+						});
+
+						}
+
+						});
+
+					});
+					
 
 
 

@@ -302,7 +302,30 @@
                         </div>
                       </div>
 
-                    <div id= 'range_area_controls'>
+                      <div id= 'simple_line_controls'>
+                        <button class="btn btn-default multivariate_buttons" type="button" data-toggle="collapse" id='simple_line_button'
+                          data-target='#simple_line_collapse' aria-expanded="false" aria-controls="collapseExample">
+                          Simple Line Chart
+                        </button>
+
+                        <div class='collapse' id='simple_line_collapse'>
+                          <p id='input_group'>
+                            <span class="input-group-addon" id="sizing-addon2">X Axis</span>
+                              <input id='x_value_simple_line' type="text" class="form-control" placeholder="X-Axis" aria-describedby="sizing-addon2" value=''><br>
+                            <span class="input-group-addon" id="sizing-addon2">Variable 1</span>
+                              <input id='var_one_simple_line' type="text" class="form-control" placeholder="Y-Axis" aria-describedby="sizing-addon2" value=''><br>
+                            <span class="input-group-addon" id="sizing-addon2">Variable 2 (optional)</span>
+                              <input id='var_two_simple_line' type="text" class="form-control" placeholder="Y-Axis" aria-describedby="sizing-addon2" value=''><br>
+                            <span class="input-group-addon" id="sizing-addon2">Variable 3 (optional)</span>
+                              <input id='var_three_simple_line' type="text" class="form-control" placeholder="Y-Axis" aria-describedby="sizing-addon2" value=''><br>
+                            <span class="input-group-addon" id="sizing-addon2">Variable 4 (optional)</span>
+                              <input id='var_four_simple_line' type="text" class="form-control" placeholder="Y-Axis" aria-describedby="sizing-addon2" value=''><br>
+                            <button id='submit_simple_line' type="button" class="btn btn-info submit_button" data-container='body' data-toggle='popover' data-placement='bottom' data-trigger='focus' data-content=>Render!</button>
+                          </p>
+                        </div>
+                      </div>
+
+                     <div id= 'range_area_controls'>
                         <button class="btn btn-default multivariate_buttons" type="button" data-toggle="collapse" id='range_area_button'
                           data-target='#range_area_collapse' aria-expanded="false" aria-controls="collapseExample">
                           Line And Range Chart
@@ -318,6 +341,24 @@
                           </p>
                         </div>
                       </div>
+
+                      <div id= 'simple_area_controls'>
+                        <button class="btn btn-default multivariate_buttons" type="button" data-toggle="collapse" id='range_area_button'
+                          data-target='#simple_area_collapse' aria-expanded="false" aria-controls="collapseExample">
+                          Simple Area Chart
+                        </button>
+
+                        <div class='collapse' id='simple_area_collapse'>
+                          <p id='input_group'>
+                            <span class="input-group-addon" id="sizing-addon2">X Axis</span>
+                              <input id='x_value_simple_area' type="text" class="form-control" placeholder="X-Axis" aria-describedby="sizing-addon2" value=''><br>
+                            <span class="input-group-addon" id="sizing-addon2">Y Axis</span>
+                              <input id='y_value_simple_area' type="text" class="form-control" placeholder="Y-Axis" aria-describedby="sizing-addon2" value=''><br>
+                            <button id='submit_simple_area' type="button" class="btn btn-info submit_button" data-container='body' data-toggle='popover' data-placement='bottom' data-trigger='focus' data-content=>Render!</button>
+                          </p>
+                        </div>
+                      </div>
+
 
 
 

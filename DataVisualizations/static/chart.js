@@ -3,7 +3,7 @@
 var fileid = {fileid};
 first_time = true;
 active = false;
-s
+
 
 
 
@@ -35,6 +35,7 @@ $('#simple_heat_map_controls').hide();
 $('#stacked_percent_controls').hide();
 $('#stacked_count_controls').hide();
 $("#basic_bar_controls").hide();
+$('#simple_area_controls').hide();
 
 
 

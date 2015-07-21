@@ -3,9 +3,7 @@ $(document).ready(function(){
 	$('.reset').on('click',function(){
 
 		$('#variable-list').attr('value', '');
-alert(first_time);
 		first_time = true
-alert(first_time)
 		selected_graph = null
 
 		$('.variable').css('background-color', 'rgb(240, 248, 270)');
