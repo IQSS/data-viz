@@ -3,7 +3,7 @@
 var fileid = {fileid};
 first_time = true;
 active = false;
-
+s
 
 
 
@@ -232,7 +232,7 @@ $('.variable').on();
 
 
         first_time = false;
-        window.selected_graph = "#multi_bar";
+        selected_graph = "#multi_bar";
 
 
         
@@ -424,7 +424,8 @@ $('.variable').on();
                         });
 
                     first_time = false;
-                  window.selected_graph = "#scatter_plot_continuous";
+                  
+                  selected_graph = "#scatter_plot_continuous";
               });
 // scatter_continuous (first_time) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^scatter_continuous (first_time)
 
@@ -460,7 +461,7 @@ $('.variable').on();
 
 
           first_time = false;
-          window.selected_graph = '#multi_bar';
+          selected_graph = '#multi_bar';
 
             $('#multi_bar').hide();
             $('#pie_chart').hide();
@@ -527,7 +528,7 @@ $('.variable').on();
 
 
           first_time = false;
-          window.selected_graph = '#line';
+          selected_graph = '#line';
 
             $('#multi_bar').hide();
             $('#pie_chart').hide();

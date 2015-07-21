@@ -13,6 +13,7 @@ $(document).ready(function(){
 		
 
 			$('#bivariate_warning').fadeIn('fast');
+			
 
 
 			$('#dismiss_bivariate').click(function(){
@@ -22,6 +23,7 @@ $(document).ready(function(){
 
 			$('#continue_to_bivariate').on('click', function(){
 
+				$(".reset").addClass('reset_bivariate').removeClass('reset');
 
 				$('#chart').html('<div id="container"></div>')
 				$('#bivariate_warning').hide();
@@ -39,6 +41,7 @@ $(document).ready(function(){
 				$('#simple_heat_map_controls').fadeIn();
 				$('#stacked_percent_controls').fadeIn();
 				$('#stacked_count_controls').fadeIn();
+				$('#basic_bar_controls').fadeIn();
 				//turn previous events off when click variables
 				$('.variable').off();
 
