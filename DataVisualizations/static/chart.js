@@ -36,6 +36,7 @@ $('#stacked_percent_controls').hide();
 $('#stacked_count_controls').hide();
 $("#basic_bar_controls").hide();
 $('#simple_area_controls').hide();
+$('#simple_line_controls').hide();
 
 
 
