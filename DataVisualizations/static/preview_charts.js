@@ -119,6 +119,7 @@ $(document).ready(function(){
 				$('hr').show();
 				$('#json_popup').fadeIn()
 				$('#sum_stats_preview').fadeIn();
+				$('svg').empty();
 
 
 				$.getJSON('http://127.0.0.1:5000/multi_bar/', function(data){
@@ -224,6 +225,7 @@ $(document).ready(function(){
 				$('hr').show();
 				$('#json_popup').fadeIn()
 				$('#sum_stats_preview').fadeIn();
+				$('svg').empty();
 
 				$.getJSON('http://127.0.0.1:5000/stacked_area/',function(data){
 
@@ -278,6 +280,7 @@ $(document).ready(function(){
 				$('hr').show();
 				$('#json_popup').fadeIn()
 				$('#sum_stats_preview').fadeIn();
+				$('svg').empty();
 
 				$.getJSON('http://127.0.0.1:5000/scatter_plot_continuous/',function(data){
 
@@ -328,6 +331,7 @@ $(document).ready(function(){
 				$('hr').show();
 				$('#json_popup').fadeIn()
 				$('#sum_stats_preview').fadeIn();
+				$('svg').empty();
 
 				$.getJSON('http://127.0.0.1:5000/multibar_continuous/', function(data){
 
@@ -381,6 +385,7 @@ $(document).ready(function(){
 				$('hr').show();
 				$('#json_popup').fadeIn()
 				$('#sum_stats_preview').fadeIn();
+				$('svg').empty();
 
 				$.getJSON('http://127.0.0.1:5000/continuous_line/', function(data){
 
