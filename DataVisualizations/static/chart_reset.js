@@ -16,8 +16,18 @@ $(document).ready(function(){
 		$('hr').hide();
 		$('#json_popup').hide();
 		$('#sum_stats_preview').empty();
+		$('#multi_bar_continuous').hide();
+		$('#button_row').show();
 
 		return
 		return
+	});
+
+	$('[title = "Select Chart"]').on('click', function(){
+
+		alert('note: this feautre is not fully developed...');
+
+		$('#button_row').show();
+		$('.chart_button').show();
 	});
 });

@@ -395,7 +395,7 @@ $('.variable').on();
                 $("#modal_content_div").html(data.metadata_modals_content);
                 $('#sum_stats_preview').fadeIn();
 
-                     $('#json_popup').fadeIn();
+                  $('#json_popup').fadeIn();
                   $('#json_popup').click(function popup(){
                       var generator=window.open('','name','height=300,width=400');
 
