@@ -6,9 +6,9 @@ This is a tool for visualizing data from the Dataverse project. It is intended t
 1. Download from Github
 
 1. Software Prerequisites:
-  * Python 2.7
+  * [Python](https://www.python.org/downloads/)
   * Python package index (pip). can be downloaded [here] (https://pip.pypa.io/en/latest/installing.html)
-  * R
+  * [R](https://www.r-project.org/)
  
 
 2. (Recommended)
