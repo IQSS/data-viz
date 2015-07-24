@@ -30,6 +30,8 @@
         <script src="{{ url_for('static', filename='chart_reset.js')}}"></script>
         <script src="{{ url_for('static', filename='bivariate_reset.js')}}"></script>
         <script src="{{ url_for('static', filename='bivariate_chart.js')}}"></script>
+        <script src="{{ url_for('static', filename='back_to_preview_mode.js')}}"></script>
+
 
         <script src="http://code.highcharts.com/highcharts.js"></script>
         <script src="http://code.highcharts.com/highcharts-more.js"></script>
@@ -235,7 +237,7 @@
                               <input id='y_value_scatter' type="text" class="form-control" placeholder="Y-Axis" aria-describedby="sizing-addon2" value=''><br>
                             <span class="input-group-addon" id="sizing-addon2">Z</span>
                               <input id='z_value_scatter' type="text" class="form-control" placeholder="(Optional) Z-Axis" aria-describedby="sizing-addon2" value="">
-                            <button id='submit_scatter_inputs' type="button" class="btn btn-info submit_button" data-container='body' data-toggle='popover' data-placement='bottom' data-trigger='focus' data-content>Render!</button>
+                            <button id='submit_scatter_inputs' type="button" class="btn btn-info submit_button" data-container='body' data-toggle='popover' data-placement='bottom' data-trigger='focus' data-content=''>Render!</button>
                           </p>
                         </div>
                       </div>

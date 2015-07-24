@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(function(){
 
 
 
@@ -46,7 +46,7 @@ $(document).ready(function(){
 				$('#simple_area_controls').fadeIn();
 				$("#simple_line_controls").fadeIn();
 				//turn previous events off when click variables
-				$('.variable').off();
+				$('.variable').off('click');
 
 				$('.variable').css('cursor','-webkit-grab');
 				$('.variable').draggable({helper:'clone'});
@@ -60,6 +60,8 @@ $(document).ready(function(){
 					}			
 				});
 
+
+				switch_to_preview(); //return to preview mode. function on "back_to_preview_mode.js"
 				$('#submit_scatter_inputs').click(function(){
 					var x_value = $('#x_value_scatter').val();
 					var y_value = $("#y_value_scatter").val();
