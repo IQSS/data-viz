@@ -176,6 +176,7 @@ $(document).ready(function(){
 
 			$('#pie_chart').on('click',function(){
 
+				$('svg').empty();
 				$('.chart_button').hide();
 				$('hr').show();
 				$('#json_popup').fadeIn()

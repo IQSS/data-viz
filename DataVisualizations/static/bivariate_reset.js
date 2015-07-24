@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	$('.reset_bivariate').on('click',function(){
-		$("#container").html('');
+		$("#container").empty();
 		$('.highcharts-container').html('');
 		$('.form-control').val('');
 	})

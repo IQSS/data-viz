@@ -18,11 +18,11 @@ import math
 from flask import Flask, jsonify, render_template, request, make_response
 import rpy2.robjects as robjects
 from rpy2.robjects.packages import STAP
-import pandas.rpy.common as com
+from rpy2.robjects import pandas2ri
 from data_class import Data
 from helper_functions import *
 
-
+pandas2ri.activate()
 
 
 # Create the application.
@@ -69,7 +69,7 @@ def preview(fileid):
 	start = df_html.find('class="dataframe"')
 	df_html = df_html[:start] + 'id = "preview_DataTable"' + df_html[start+1:]
 	
-	r_dataframe = com.convert_to_r_dataframe(df_global)
+	r_dataframe = pandas2ri.py2ri(df_global)
 	robjects.r('''
        source('preprocess.R')
 	''')
