@@ -32,7 +32,8 @@ $(document).ready(function(){
 				$('.chart_button').hide();
 				$('svg').empty();
 				$('.switch').remove();
-				$('.chart_options').prepend('<button type="button" class="btn btn-sm btn-default switch_charting" id="btnAddItem"  title="Bivariate Mode"><span class="glyphicon glyphicon-transfer" style="color:#818181;"></span> Return to Charting</button>');
+				$('.chart_options').prepend('<button type="button" class="btn btn-sm btn-default switch_charting" id="btnAddItem"  title="Bivariate Mode"><span class="glyphicon glyphicon-transfer" style="color:#818181;"></span> Return to Preview Mode</button>');
+				$('[title="Select Chart"]').hide();
 				$('#variable-list').val('');
 				$('.variable').css('background-color', 'rgb(240, 248, 270)');
 				$('#right_panel_title').html('Drag and Drop Variables To Plot');
@@ -641,9 +642,9 @@ $(document).ready(function(){
 							});
 
 						}
-
+						bind_reset_bivariate();
 						});
-
+						
 					});
 
 					$('#submit_simple_area').on('click',function(){
