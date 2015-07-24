@@ -85,6 +85,7 @@ $(document).ready(function(){
 					$('#multi_bar_continuous').hide();
 					$('#scatter_plot_continuous').hide();
 					$('#line').hide();
+					$('#no_mixed').hide();
 				}
 				else if(all_plot_types == 'continuous_only'){
 					$('#stacked_area').show();
@@ -94,6 +95,7 @@ $(document).ready(function(){
 
 					$("#multi_bar").hide();
 					$('#pie_chart').hide();
+					$('#no_mixed').hide();
 
 
 				}

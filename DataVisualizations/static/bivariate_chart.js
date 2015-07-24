@@ -43,6 +43,7 @@ $(document).ready(function(){
 				$('#stacked_count_controls').fadeIn();
 				$('#basic_bar_controls').fadeIn();
 				$('#simple_area_controls').fadeIn();
+				$("#simple_line_controls").fadeIn();
 				//turn previous events off when click variables
 				$('.variable').off();
 
@@ -624,8 +625,8 @@ $(document).ready(function(){
 						            }
 						        },
 						        tooltip: {
-						            headerFormat: '<b>'+x_value+'</b> of <b>{point.key}</b>',
-						            pointFormat: '<b>'+y_value+'</b>: {series.name} Frequency: <b>{point.y}</b>',
+						            headerFormat: '<b>'+x_value+'</b> of <b>{point.key}</b><br/>',
+						            pointFormat: '<b>'+y_value+'</b>: {series.name} Frequency: <b>{point.y}</b><br/>',
 						            shared: true,
 						            useHTML: true
 						        },
@@ -699,6 +700,73 @@ $(document).ready(function(){
 
 						}
 
+						});
+
+					});
+					$('#submit_simple_line').on('click',function(){
+
+						var x_value = $("#x_value_simple_line").val();
+						var var_one = $('#var_one_simple_line').val();
+						var var_two = $('#var_two_simple_line').val();
+						var var_three = $('#var_three_simple_line').val();
+						var var_four = $('#var_four_simple_line').val();
+
+						$.getJSON('http://127.0.0.1:5000/simple_line/',{'x_value':x_value, 'var_one': var_one, 'var_two': var_two, 'var_three': var_three, 'var_four': var_four}, function(data){
+
+							if(data.x_or_y_missing == true){
+								$('#submit_simple_line').attr('data-content', 'Chart not created. Please specify a variable name for both the "X Axis" and "Variable 1" fields.');
+								$('#submit_simple_line').focus();
+							}
+							else if(data.repeated_variables == true){
+								$('#submit_simple_line').attr('data-content', 'Chart not created. No variable may be used more than once.');
+								$('#submit_simple_line').focus();
+							}
+							else if(data.inputs_valid == false){
+								$('#submit_simple_line').attr('data-content','Chart not created. All variable names must be valid variables. ');
+								$('#submit_simple_line').focus();
+							}
+							else if (data.y_vars_numeric == false){
+								$('#submit_simple_line').attr('data-content','Chart not created. One or more of the speciified Y-axis variables are of type "character." Please pick only numeric variables to chart.');	
+								$('#submit_simple_line').focus();
+							}
+							else{
+								$('.popover').hide();
+								$(function () {
+								    $('#container').highcharts({
+								        title: {
+								            text: 'Lines on <b>' + x_value,
+								            x: -20 //center
+								        },
+
+								        xAxis: {
+								            categories: data.x_categories,
+								            title:{text: '<b>'+ x_value + '</b>'}
+								        },
+								        yAxis: {
+								            title: {
+								                text: ' Selected Variables'
+								            },
+								            plotLines: [{
+								                value: 0,
+								                width: 1,
+								                color: '#808080'
+								            }]
+								        },
+								        tooltip: {
+								        	headerFormat: x_value+': <b>{point.x}</b> <br>'
+
+								        },
+								        legend: {
+								            layout: 'vertical',
+								            align: 'right',
+								            verticalAlign: 'middle',
+								            borderWidth: 0
+								        },
+								        series: data.series
+								    });
+								});
+							}
+							
 						});
 
 					});

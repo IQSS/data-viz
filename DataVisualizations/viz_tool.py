@@ -20,6 +20,7 @@ import rpy2.robjects as robjects
 from rpy2.robjects.packages import STAP
 import pandas.rpy.common as com
 from data_class import Data
+from helper_functions import *
 
 
 
@@ -947,6 +948,83 @@ def percent_bars():
 	'inputs_valid':inputs_valid}
 
 	return jsonify(**d)
+#---------------------------------------------------------------------
+
+@app.route('/simple_line/')
+def simple_line():
+
+	x_value = request.args.get("x_value", default = None, type=str)
+	var_one = request.args.get('var_one', default = None, type=str)
+	var_two = request.args.get('var_two', default = None, type=str)
+	var_three = request.args.get('var_three', default = None, type=str)
+	var_four = request.args.get('var_four', default = None, type=str)
+
+
+	x_or_y_missing = False
+	repeated_variables = False
+	inputs_valid = True
+	y_vars_numeric = True
+	series = None
+	x_categories = None
+
+
+	if x_value == '' or var_one == '':
+		x_or_y_missing = True
+
+	else: #check any variables are repeated
+		var_list = list()
+		for each in [var_one,var_two,var_three,var_four] :
+			if each != '':
+				var_list.append(each)
+
+		all_var = [x_value]
+		for x in var_list:
+			all_var.append(x)
+		if len(set(all_var)) < len(all_var):
+			repeated_variables = True
+
+		if repeated_variables ==False: #all variables different
+
+			for var in all_var:
+				if var not in df_global.columns:
+					inputs_valid = False
+					break
+			if inputs_valid == True: #all inputs valid
+
+				df= df_global[all_var]
+				df_full = df.dropna()
+
+				y_vars_numeric = all_var_numeric(var_list,df_full)
+
+				if y_vars_numeric == True:
+					
+					x_categories = list(set(list(df_full[x_value])))
+					if pandas.Series(x_categories).dtype == 'int64' or pandas.Series(x_categories).dtype =='float64':
+						x_categories.sort()
+
+					n_rows = df_full.shape[0]
+					len_x = len(x_categories)
+
+					series= list()
+					for var in var_list:
+
+						var_dict = dict()
+						var_dict['name']= var
+						var_dict['data'] = [0]*len_x
+
+						for row in range(0,n_rows):
+							x_val = df_full.iloc[row][x_value]
+							y_val = df_full.iloc[row][var]
+
+							x_index = x_categories.index(x_val)
+							var_dict['data'][x_index] += y_val
+
+						series.append(var_dict)
+
+
+
+	d={'x_or_y_missing':x_or_y_missing, 'y_vars_numeric':y_vars_numeric, 'inputs_valid': inputs_valid, 'x_categories': x_categories, 'series':series, 'repeated_variables':repeated_variables}
+	return jsonify (**d)
 
 
 
