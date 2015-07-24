@@ -32,7 +32,7 @@ $(document).ready(function(){
 				$('.chart_button').hide();
 				$('svg').empty();
 				$('.switch').remove();
-				$('.chart_options').prepend('<button type="button" class="btn btn-sm btn-default switch_charting" id="btnAddItem"  title="Bivariate Mode"><span class="glyphicon glyphicon-transfer" style="color:#818181;"></span> Return to Preview Mode</button>');
+				$('.chart_options').prepend('<button type="button" class="btn btn-sm btn-default switch switch_preview_mode" id="btnAddItem"  title="Bivariate Mode"><span class="glyphicon glyphicon-transfer" style="color:#818181;"></span> Return to Preview Mode</button>');
 				$('[title="Select Chart"]').hide();
 				$('#variable-list').val('');
 				$('.variable').css('background-color', 'rgb(240, 248, 270)');
@@ -240,7 +240,7 @@ $(document).ready(function(){
 								});
 
 						}
-
+						bind_reset_bivariate();
 					});
 				});
 
@@ -320,7 +320,7 @@ $(document).ready(function(){
 
 
 					});
-
+				bind_reset_bivariate();
 
 				});
 				
@@ -414,6 +414,7 @@ $(document).ready(function(){
 							});
 						}
 					});
+					bind_reset_bivariate();
 				})
 				$('#submit_stacked_percent_bar').on('click',function(){
 
@@ -479,7 +480,7 @@ $(document).ready(function(){
 						}
 
 					});
-
+				bind_reset_bivariate();
 				});
 
 				$('#submit_stacked_count_bar').on('click',function(){
@@ -573,6 +574,7 @@ $(document).ready(function(){
 						}
 
 					});
+				bind_reset_bivariate();
 
 				});
 
@@ -702,6 +704,7 @@ $(document).ready(function(){
 						}
 
 						});
+					bind_reset_bivariate();
 
 					});
 					$('#submit_simple_line').on('click',function(){
@@ -769,7 +772,7 @@ $(document).ready(function(){
 							}
 							
 						});
-
+					bind_reset_bivariate();
 					});
 					
 
