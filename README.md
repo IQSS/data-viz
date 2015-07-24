@@ -9,12 +9,12 @@ This is a tool for visualizing data from the Dataverse project. It is intended t
   * [Python](https://www.python.org/downloads/)
   * Python package index [(pip)] (https://pip.pypa.io/en/latest/installing.html)
   * [R](https://www.r-project.org/)
-   * Make sure you have the libraries 'rjson' and 'DescTools' loaded into R. To download them, open R, and run the following commands: 
+     + Make sure you have the libraries 'rjson' and 'DescTools' loaded into R. To download them, open R, and run the following    commands: 
     
-   ``` R
-       install.packages('rjson')
-       install.packages('DescTools')
-```
+    ``` R
+        install.packages('rjson')
+        install.packages('DescTools')
+ ```
  
 
 2. (Recommended)
