@@ -53,7 +53,7 @@ $(function(){
 
 				$('#rightpanel').css('z-index', 0);
 
-				$('input').droppable({
+				$('.btn-group input').droppable({
 					drop: function(event, ui){
 						var id = ui.draggable.attr('id');
 						$(this).val(id);

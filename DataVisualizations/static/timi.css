@@ -71,9 +71,12 @@
   display: block;
 }
 .multivariate_buttons{
-  margin-left: 30px;
+  margin-left: 5px;
   margin-bottom: 5px;
 }
 .highcharts_container{
   height: 600px;
+}
+#rightpanelcontent .btn-group{
+  margin-left: 3px;
 }

@@ -1,5 +1,0 @@
-Flask==0.10.1
-Jinja2==2.7.3
-numpy==1.9.2
-pandas==0.16.2
-requests==2.7.0

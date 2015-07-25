@@ -1,6 +1,7 @@
 function switch_to_preview(){
 	$('.switch_preview_mode').on('click',function(){
 
+			alert('this button does not work yet. please see:\n\n https://github.com/IQSS/data-viz/issues/1\n \nTo continue using this tool, refresh the page. ')
 
 			$('#chart').html('<svg></svg>');
 			$('.switch').remove();

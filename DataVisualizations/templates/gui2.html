@@ -224,12 +224,16 @@
 
 
                       <div id= 'scatter_controls'>
-                        <button class="btn btn-default multivariate_buttons" type="button" data-toggle="collapse" id='scatter_control_button'
-                          data-target='#scatter_collapse' aria-expanded="false" aria-controls="collapseExample">
-                          2D/3D Bubble Plot
-                        </button>
+                        <div class="btn-group">
+                          <button class="btn btn-default"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></button>
+                          <button class="btn btn-default multivariate_buttons" type="button" data-toggle="collapse" id='scatter_control_button'
+                            data-target='#scatter_collapse' aria-expanded="false" aria-controls="collapseExample">
+                            2D/3D Bubble Plot
+                          </button>
+                        
 
                         <div class='collapse' id='scatter_collapse'>
+                        <br><br>
                           <p id='input_group'>
                             <span class="input-group-addon" id="sizing-addon2">X</span>
                               <input id='x_value_scatter' type="text" class="form-control" placeholder="X-Axis" aria-describedby="sizing-addon2" value=''><br>
@@ -240,15 +244,20 @@
                             <button id='submit_scatter_inputs' type="button" class="btn btn-info submit_button" data-container='body' data-toggle='popover' data-placement='bottom' data-trigger='focus' data-content=''>Render!</button>
                           </p>
                         </div>
+                        </div>
                       </div>
 
                       <div id= 'basic_bar_controls'>
-                        <button class="btn btn-default multivariate_buttons" type="button" data-toggle="collapse" id='basic_bar_button'
-                          data-target='#basic_bar' aria-expanded="false" aria-controls="collapseExample">
-                          Simple Bar Chart
-                        </button>
+                        <div class="btn-group">
+                         <button class="btn btn-default"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></button>
+                          <button class="btn btn-default multivariate_buttons" type="button" data-toggle="collapse" id='basic_bar_button'
+                            data-target='#basic_bar' aria-expanded="false" aria-controls="collapseExample">
+                            Simple Bar Chart
+                          </button>
+                        
 
                         <div class='collapse' id='basic_bar'>
+                          <br><br>
                           <p id='input_group'>
                             <span class="input-group-addon" id="sizing-addon2">X</span>
                               <input id='x_value_basic_bar' type="text" class="form-control" placeholder="X-Axis" aria-describedby="sizing-addon2" value=''><br>
@@ -257,15 +266,20 @@
                             <button id='submit_basic_bar' type="button" class="btn btn-info submit_button" data-container='body' data-toggle='popover' data-placement='bottom' data-trigger='focus' data-content>Render!</button>
                           </p>
                         </div>
+                        </div>
                       </div>
 
                       <div id= 'stacked_percent_controls'>
-                        <button class="btn btn-default multivariate_buttons" type="button" data-toggle="collapse" id='stacked_percent_bar_button'
-                          data-target='#stacked_percent_bar' aria-expanded="false" aria-controls="collapseExample">
-                          Stacked Percent Bars
-                        </button>
+                        <div class="btn-group">
+                         <button class="btn btn-default"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></button>
+                          <button class="btn btn-default multivariate_buttons" type="button" data-toggle="collapse" id='stacked_percent_bar_button'
+                            data-target='#stacked_percent_bar' aria-expanded="false" aria-controls="collapseExample">
+                            Stacked Percent Bars
+                          </button>
+                        
 
                         <div class='collapse' id='stacked_percent_bar'>
+                          <br><br>
                           <p id='input_group'>
                             <span class="input-group-addon" id="sizing-addon2">X</span>
                               <input id='x_value_percent_bar' type="text" class="form-control" placeholder="X-Axis" aria-describedby="sizing-addon2" value=''><br>
@@ -274,15 +288,20 @@
                             <button id='submit_stacked_percent_bar' type="button" class="btn btn-info submit_button" data-container='body' data-toggle='popover' data-placement='bottom' data-trigger='focus' data-content>Render!</button>
                           </p>
                         </div>
+                        </div>
                       </div>
 
                       <div id= 'stacked_count_controls'>
-                        <button class="btn btn-default multivariate_buttons" type="button" data-toggle="collapse" id='stacked_count_bar_button'
-                          data-target='#stacked_count_bar' aria-expanded="false" aria-controls="collapseExample">
-                          Stacked Frequency Bars
-                        </button>
+                        <div class="btn-group">
+                         <button class="btn btn-default"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></button>
+                          <button class="btn btn-default multivariate_buttons" type="button" data-toggle="collapse" id='stacked_count_bar_button'
+                            data-target='#stacked_count_bar' aria-expanded="false" aria-controls="collapseExample">
+                            Stacked Count Bars
+                          </button>
+                        
 
                         <div class='collapse' id='stacked_count_bar'>
+                          <br><br>
                           <p id='input_group'>
                             <span class="input-group-addon" id="sizing-addon2">X</span>
                               <input id='x_value_count_bar' type="text" class="form-control" placeholder="X-Axis" aria-describedby="sizing-addon2" value=''><br>
@@ -291,15 +310,20 @@
                             <button id='submit_stacked_count_bar' type="button" class="btn btn-info submit_button" data-container='body' data-toggle='popover' data-placement='bottom' data-trigger='focus' data-content>Render!</button>
                           </p>
                         </div>
+                        </div>
                       </div>
 
                       <div id= 'simple_heat_map_controls'>
-                        <button class="btn btn-default multivariate_buttons" type="button" data-toggle="collapse" id='simple_heat_map_button'
-                          data-target='#simple_heat_map_collapse' aria-expanded="false" aria-controls="collapseExample">
-                          Simple Heat Map
-                        </button>
+                        <div class="btn-group">
+                         <button class="btn btn-default"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></button>
+                          <button class="btn btn-default multivariate_buttons" type="button" data-toggle="collapse" id='simple_heat_map_button'
+                            data-target='#simple_heat_map_collapse' aria-expanded="false" aria-controls="collapseExample">
+                            Simple Heat Map
+                          </button>
+                        
 
                         <div class='collapse' id='simple_heat_map_collapse'>
+                          <br><br>
                           <p id='input_group'>
                             <span class="input-group-addon" id="sizing-addon2">X Axis</span>
                               <input id='x_value_simple_heat_map' type="text" class="form-control" placeholder="X-Axis" aria-describedby="sizing-addon2" value=''><br>
@@ -308,15 +332,20 @@
                             <button id='submit_simple_heat_map' type="button" class="btn btn-info submit_button" data-container='body' data-toggle='popover' data-placement='bottom' data-trigger='focus' data-content>Render!</button>
                           </p>
                         </div>
+                        </div>
                       </div>
 
                       <div id= 'simple_line_controls'>
-                        <button class="btn btn-default multivariate_buttons" type="button" data-toggle="collapse" id='simple_line_button'
-                          data-target='#simple_line_collapse' aria-expanded="false" aria-controls="collapseExample">
-                          Simple Line Chart
-                        </button>
+                        <div class="btn-group">
+                         <button class="btn btn-default"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></button>
+                          <button class="btn btn-default multivariate_buttons" type="button" data-toggle="collapse" id='simple_line_button'
+                            data-target='#simple_line_collapse' aria-expanded="false" aria-controls="collapseExample">
+                            Simple Line Chart
+                          </button>
+                        
 
                         <div class='collapse' id='simple_line_collapse'>
+                          <br><br>
                           <p id='input_group'>
                             <span class="input-group-addon" id="sizing-addon2">X Axis</span>
                               <input id='x_value_simple_line' type="text" class="form-control" placeholder="X-Axis" aria-describedby="sizing-addon2" value=''><br>
@@ -331,15 +360,20 @@
                             <button id='submit_simple_line' type="button" class="btn btn-info submit_button" data-container='body' data-toggle='popover' data-placement='bottom' data-trigger='focus' data-content=>Render!</button>
                           </p>
                         </div>
+                        </div>
                       </div>
 
                      <div id= 'range_area_controls'>
-                        <button class="btn btn-default multivariate_buttons" type="button" data-toggle="collapse" id='range_area_button'
-                          data-target='#range_area_collapse' aria-expanded="false" aria-controls="collapseExample">
-                          Line And Range Chart
-                        </button>
+                       <div class="btn-group">
+                        <button class="btn btn-default"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></button>
+                          <button class="btn btn-default multivariate_buttons" type="button" data-toggle="collapse" id='range_area_button'
+                            data-target='#range_area_collapse' aria-expanded="false" aria-controls="collapseExample">
+                            Line And Range Chart
+                          </button>
+                        
 
                         <div class='collapse' id='range_area_collapse'>
+                          <br><br>
                           <p id='input_group'>
                             <span class="input-group-addon" id="sizing-addon2">X Axis</span>
                               <input id='x_value_range_area' type="text" class="form-control" placeholder="X-Axis" aria-describedby="sizing-addon2" value=''><br>
@@ -348,15 +382,20 @@
                             <button id='submit_range_area' type="button" class="btn btn-info submit_button" data-container='body' data-toggle='popover' data-placement='bottom' data-trigger='focus' data-content=>Render!</button>
                           </p>
                         </div>
+                        </div>
                       </div>
 
                       <div id= 'simple_area_controls'>
+                      <div class="btn-group">
+                       <button class="btn btn-default"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></button>
                         <button class="btn btn-default multivariate_buttons" type="button" data-toggle="collapse" id='range_area_button'
                           data-target='#simple_area_collapse' aria-expanded="false" aria-controls="collapseExample">
                           Simple Area Chart
                         </button>
+                      
 
                         <div class='collapse' id='simple_area_collapse'>
+                          <br><br>
                           <p id='input_group'>
                             <span class="input-group-addon" id="sizing-addon2">X Axis</span>
                               <input id='x_value_simple_area' type="text" class="form-control" placeholder="X-Axis" aria-describedby="sizing-addon2" value=''><br>
@@ -364,6 +403,7 @@
                               <input id='y_value_simple_area' type="text" class="form-control" placeholder="Y-Axis" aria-describedby="sizing-addon2" value=''><br>
                             <button id='submit_simple_area' type="button" class="btn btn-info submit_button" data-container='body' data-toggle='popover' data-placement='bottom' data-trigger='focus' data-content=>Render!</button>
                           </p>
+                        </div>
                         </div>
                       </div>
 
