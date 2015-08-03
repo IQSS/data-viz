@@ -18,7 +18,7 @@ This is a tool for visualizing data from the Dataverse project. It is intended t
  
 
 2. (Recommended)
-  * Before downloading the necessary packages for this application, it is recommended to set up a python virtualenv with a virtualenvwrapper. Please see the [virtualenv documentation] and then the [virtualenvwrapper documentation.](http://virtualenvwrapper.readthedocs.org/en/latest/install.html) Note: if you are running windows, download [virtualenvwrapper-win-1.1.5] (https://pypi.python.org/pypi/virtualenvwrapper-win) or [cygwin] (https://www.cygwin.com/) instead of virutalenvwrapper.
+  * Before downloading the necessary packages for this application, it is recommended to set up a python virtualenv with a virtualenvwrapper. Please see the [virtualenv documentation](https://virtualenv.pypa.io/en/latest/) and then the [virtualenvwrapper documentation.](http://virtualenvwrapper.readthedocs.org/en/latest/install.html) Note: if you are running windows, download [virtualenvwrapper-win-1.1.5] (https://pypi.python.org/pypi/virtualenvwrapper-win) or [cygwin] (https://www.cygwin.com/) instead of virutalenvwrapper.
  
 3. Package Download
  * In your terminal, change directories to the path of the application (data-viz). Then enter the 'DataVisualiations' directory. if you decided to set up an virtualenvwrapper, activate it with the command: ```$ workon your_environment_name```. Then, change directories to the project directory ```data-viz```, then enter the ```DataVisualizations``` folder. To download the contents of the "requirements.txt" file, type the following command into the terminal: ```$ pip install -r /path/to/requirements.txt```
